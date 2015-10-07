@@ -51,3 +51,7 @@ sure to set the input device and channel to match your MIDI controller's connect
 To use SampliTron as a MIDI controller like you can with Proxima Controller, check the 
 "MIDI Output Enabled" button. If it's lit, you'll be transmitting note data to the 
 selected MIDI out device when you trigger samples with your computer keyboard.
+
+### Problems
+
+It will not currently build. I'm still tracking down some files needed by the program.
