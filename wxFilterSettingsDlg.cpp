@@ -95,7 +95,6 @@ void wxFilterSettingsDlg::CreateControls()
     itemStaticText56->SetForegroundColour(_textColour);
     itemBoxSizer3->Add(itemStaticText56, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-	wxStandardPaths paths;
 	wxBitmap* bitmap1 = new wxBitmap(greenbtn_xpm, wxBITMAP_TYPE_XPM );
 	wxBitmap* bitmap2 = new wxBitmap(darkbtn_xpm, wxBITMAP_TYPE_XPM );
 	_filterEnabled = new wxSwitch( itemDialog1, ID_FILTER_ENABLED, _T(""), wxDefaultPosition, wxSize(22,22) );

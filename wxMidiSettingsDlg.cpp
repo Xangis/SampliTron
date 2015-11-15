@@ -74,9 +74,8 @@ void wxMidiSettingsDlg::CreateControls()
     wxMidiSettingsDlg* itemDialog1 = this;
 
     wxImage spinImage;
-    wxStandardPaths paths;
 #ifdef WIN32
-    wxString spinPath = wxString::Format(_("%s\\spin.bmp"), paths.GetDataDir().c_str());
+    wxString spinPath = wxString::Format(_("%s\\spin.bmp"), wxStandardPaths::GetDataDir().c_str());
 #else
     wxString spinPath = wxString::Format(_("%s"), _("./spin.bmp"));
 #endif

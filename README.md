@@ -52,6 +52,14 @@ To use SampliTron as a MIDI controller like you can with Proxima Controller, che
 "MIDI Output Enabled" button. If it's lit, you'll be transmitting note data to the 
 selected MIDI out device when you trigger samples with your computer keyboard.
 
+### Building
+
+This app requires wxWdgets 2.8 or newer (preferably 3.0), libportaudio-dev, libasound2-dev,
+and libsndfile-dev.
+
 ### Problems
 
-It will not currently build. I'm still tracking down some files needed by the program.
+It will not currently build on Windows. I'm still tracking down some files needed by the 
+program.
+
+On Linux, it will build but not produce sound (and the UI looks messed up).

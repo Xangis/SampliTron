@@ -164,9 +164,8 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
-	wxStandardPaths paths;
 #ifdef WIN32
-	wxFileName filename = paths.GetDataDir() + _("\\samplitron.htb");
+	wxFileName filename = wxStandardPaths::GetDataDir() + _("\\samplitron.htb");
 #else
 	wxFileName filename = wxString(_("./samplitron.htb"));
 #endif
@@ -1680,9 +1679,8 @@ void wxKeyboard::AllControllersOff( void )
 */
 void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 {
-	wxStandardPaths paths;
-	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxOPEN );
+	wxString path = wxStandardPaths::Get().GetDataDir() + _("\\patches");
+	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
 
 	wxString filename;
 
@@ -1753,8 +1751,7 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 {
 #ifdef DEMOVERSION
 #else
-	wxStandardPaths paths;
-	wxString path = paths.GetDataDir() + _("\\patches");
+	wxString path = wxStandardPaths::Get().GetDataDir() + _("\\patches");
 	wxFileDialog fdialog( this, _T("Save Config As"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
 
 	wxString filename;
@@ -1775,7 +1772,7 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 		file.SetValue(wxString::Format(_("Key%dSpecified"), i),  wxString::Format(_("%d"), _sample[i]->_userSpecified ));
 		if( _sample[i]->_userSpecified )
 		{
-			wxString exePath = paths.GetDataDir().MakeLower();
+			wxString exePath = wxStandardPaths::Get().GetDataDir().MakeLower();
 			wxString fileLocation = _sample[i]->_filename.MakeLower();
 			if( fileLocation.StartsWith(exePath))
 			{
