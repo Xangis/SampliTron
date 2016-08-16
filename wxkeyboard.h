@@ -126,16 +126,12 @@ public:
     static bool ShowToolTips();
 	int GetNumNotesPlaying();
 	void* Entry();
-	wxString GetMidiError(int id);
 	float GetEnvelopeVolume(int note, int playbackSamplePosition);
 	// OctaveCallback members.
 	void PlayNote( int note, bool receivedFromMidi = false );
 	void StopNote( int note, bool receivedFromMidi = false );
 	void AllNotesOff( bool receivedFromMidi = false );
 	void OnRightClick( int note );
-#ifdef WIN32
-	void ProcessMidiMessage( DWORD_PTR dwParam1, DWORD_PTR dwParam2 );
-#endif
 	// End OctaveCallback members.
 	void RefreshSampleData();
 	bool LoadSample(int sampleNumber);
@@ -148,6 +144,8 @@ public:
 	void SelectMidiOutputChannel(int number);
 	void EnableMidiOutput(bool enabled);
 	// End MidiSettingsInterface methods.
+	void SendMidiMessage( unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4, bool shortmsg = false );
+	void ProcessMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4);
 private:
 	int _numOctaves;
 	wxSettingsFile* _settingsFile;
@@ -169,12 +167,6 @@ private:
 	wxVolumeMeter* _volumeMeterL;
 	wxVolumeMeter* _volumeMeterR;
     wxColour _textColour;
-#ifdef WIN32
-	IUnknown * _volumeMeterAPO;
-	IUnknown * _reverbAPO;
-	IXAudio2* _xAudio2;
-	IXAudio2MasteringVoice* _masteringVoice;
-#endif
     wxColour _backgroundColour;
 	wxHtmlHelpController* _helpCtrl;
     int _inputChannel;
@@ -191,10 +183,15 @@ private:
 	wxIcon _icon;
 	AdsrParameters _adsrParameters;
 #ifdef WIN32
-	HMIDIOUT _midiOutDevice;
-    HMIDIIN _midiInDevice;
 	XAUDIO2_FILTER_PARAMETERS _filterParameters;
+	IUnknown * _volumeMeterAPO;
+	IUnknown * _reverbAPO;
+	IXAudio2* _xAudio2;
+	IXAudio2MasteringVoice* _masteringVoice;
 #endif
+	// Do NOT declare these, they're inherited from MidiSettingsInterface.
+	//RtMidiOut* _midiOutDevice;
+    //RtMidiIn* _midiInDevice;
 };
 
 #endif

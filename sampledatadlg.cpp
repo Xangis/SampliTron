@@ -204,7 +204,7 @@ void SampleDataDlg::SetSample( SampleData* sample )
 */
 void SampleDataDlg::OnBrowse( wxCommandEvent& event )
 {
-	wxFileDialog fdialog( this, _T("Choose a sample"), _T("./samples"), _T(""), _T("Wave Files (*.wav) |*.wav||"), wxOPEN|wxCHANGE_DIR );
+	wxFileDialog fdialog( this, _T("Choose a sample"), _T("./samples"), _T(""), _T("Wave Files (*.wav) |*.wav||"), wxFD_OPEN|wxFD_CHANGE_DIR );
 
 	wxString filename;
 

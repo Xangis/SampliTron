@@ -55,12 +55,11 @@ wxKeyboard::~wxKeyboard()
 #ifdef WIN32
 	if( _midiInDevice != NULL )
 	{
-		midiInStop(_midiInDevice);
-		midiInClose(_midiInDevice);
+		_midiInDevice->closePort();
 	}
 	if( _midiOutDevice != NULL )
 	{
-		midiOutClose(_midiOutDevice);
+		_midiOutDevice->closePort();
 	}
     //_masteringVoice->DestroyVoice();
     SAFE_RELEASE( _xAudio2 );
@@ -84,8 +83,6 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
         _sample[count]->_volume = 127;
     }
 #ifdef WIN32
-	_midiInDevice = NULL;
-	_midiOutDevice = NULL;
 	_masteringVoice = NULL;
 	_xAudio2 = NULL;
 	_reverbAPO = NULL;
@@ -131,7 +128,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     _octave[6] = NULL;
 	_numOctaves = 5;
 	_midiInputDeviceNumber = 0;  // MIDI Mapper
-	_midiOutputDeviceNumber = -1;  // Default Output
+	_midiOutputDeviceNumber = 0;  // Default Output
 	EnableMidiOutput(false);
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
@@ -164,7 +161,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
-	wxStandardPaths paths;
+	wxStandardPaths paths = wxStandardPaths::Get();
 #ifdef WIN32
 	wxFileName filename = paths.GetDataDir() + _("\\samplitron.htb");
 #else
@@ -463,6 +460,10 @@ void wxKeyboard::CreateControls()
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
     wxBitmap _octaveBitmap(itemDialog1->GetBitmapResource(_("octave.bmp")));
+	if( !_octaveBitmap.IsOk() )
+	{
+		wxMessageBox(_("Could not load octave.bmp. Files broken."), _("Missing File"));
+	}
 	wxBitmap* keyind1sml = new wxBitmap(_("btn1sml.xpm"), wxBITMAP_TYPE_XPM );
 	wxBitmap* keyind1lrg = new wxBitmap(_("btn1lrg.xpm"), wxBITMAP_TYPE_XPM );
     _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 24, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
@@ -554,7 +555,7 @@ void wxKeyboard::OnMidiSettings( wxCommandEvent& )
     dlg->SetBackgroundColour(wxColour( 0, 8, 40 ));
 	dlg->SetMidiOutputCheckbox(_midiOutputEnabled);
 	dlg->SetMidiInputDeviceIndex(_midiInputDeviceNumber );
-	dlg->SetMidiOutputDeviceIndex(_midiOutputDeviceNumber + 1 );
+	dlg->SetMidiOutputDeviceIndex(_midiOutputDeviceNumber );
 	dlg->SetMidiInputChannel(_inputChannel);
 	dlg->SetMidiOutputChannel(_outputChannel);
 #ifdef WIN32
@@ -642,10 +643,11 @@ void wxKeyboard::SetBank( int bank, bool receivedFromMidi )
 	{
 #ifdef WIN32
 		// Coarse bank adjust: 00 (not used), 0xXX (bank), 0x00, 0xBX (channel)
-		WORD loWord = MAKEWORD( (bank - 1), 0 );  // Position 2, then position 1.
-		WORD hiWord = MAKEWORD( (175 + _outputChannel), 0 ); // 176 = 0xB0.  Position 4, then position 3.
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( (bank - 1), 0 );  // Position 2, then position 1.
+		//WORD hiWord = MAKEWORD( (175 + _outputChannel), 0 ); // 176 = 0xB0.  Position 4, then position 3.
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage(0, bank-1, 0, 175 + _outputChannel);
 		// Fine bank adjust: 00 (not used), 0xXX (bank), 0x20, 0xBX (channel)
 		//loWord = MAKEWORD( (bank - 1), 0 );  // Position 2, then position 1.
 		//hiWord = MAKEWORD( (175 + _outputChannel), 0x20 ); // 176 = 0xB0.  Position 4, then position 3.
@@ -723,10 +725,11 @@ void wxKeyboard::SetPatch( int value, bool receivedFromMidi )
 	if( _midiOutputEnabled && !receivedFromMidi )
 	{
 #ifdef WIN32
-		WORD loWord( MAKEWORD( 00, 00 ));
-		WORD hiWord( MAKEWORD( (_outputChannel + 191), (value - 1) ) );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg( _midiOutDevice, fullWord );
+		//WORD loWord( MAKEWORD( 00, 00 ));
+		//WORD hiWord( MAKEWORD( (_outputChannel + 191), (value - 1) ) );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg( _midiOutDevice, fullWord );
+		SendMidiMessage(0, 0, value - 1, 191 + _outputChannel);
 #endif
 	}
 }
@@ -1042,10 +1045,11 @@ void wxKeyboard::PlayNote( int note, bool receivedFromMidi )
 		{
 			// 00 (not used), 7F (velocity), 2B (note number), 9X (note on)+channel
 			char volume = _sample[note]->_volume;
-			WORD loWord = MAKEWORD( volume, 00 );
-			WORD hiWord = MAKEWORD( (143 + _outputChannel), note );
-			DWORD fullWord = MAKELONG( hiWord, loWord );
-			midiOutShortMsg(_midiOutDevice, fullWord );
+			//WORD loWord = MAKEWORD( volume, 00 );
+			//WORD hiWord = MAKEWORD( (143 + _outputChannel), note );
+			//DWORD fullWord = MAKELONG( hiWord, loWord );
+			//midiOutShortMsg(_midiOutDevice, fullWord );
+			SendMidiMessage( 0, volume, note, 143 + _outputChannel );
 		}
 
 		_playing[note] = true;
@@ -1121,10 +1125,11 @@ void wxKeyboard::StopNote( int note, bool receivedFromMidi )
 		// We send the note off regardless of whether it's actually on or not - we may 
 		// have had a mistriggered event.
 		// 00 (not used), 00 (velocity), 2B (note number), 80 (note off)+channel
-		WORD loWord = MAKEWORD( 0, 0 );
-		WORD hiWord = MAKEWORD( (127 + _outputChannel), note );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( 0, 0 );
+		//WORD hiWord = MAKEWORD( (127 + _outputChannel), note );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, 0, note, 127 + _outputChannel );
 	}
 #endif
 	_playing[note] = false;
@@ -1349,108 +1354,87 @@ bool wxKeyboard::LoadSample(int sampleNum)
 /**
 * Callback for MIDI message data.
 */
-void CALLBACK MidiMessageHandler(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
+//void CALLBACK MidiMessageHandler(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
+void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message, void *userData )
 {
-	wxKeyboard* key = (wxKeyboard*)dwInstance;
+	wxKeyboard* key = (wxKeyboard*)userData;
 
-	// If the MIDI port opened, we can start it to begin receiving messages.
-	if( wMsg == MIM_OPEN ) // 961
+    unsigned char a = 0;
+    unsigned char b = 0;
+    unsigned char c = 0;
+    unsigned char d = 0;
+    if( message->size() > 0 )
+    {
+        d = (*message)[0];
+    }
+    if( message->size() > 1 )
+    {
+        c = (*message)[1];
+    }
+    if( message->size() > 2 )
+    {
+        b = (*message)[2];
+    }
+    if( message->size() > 3 )
+    {
+        a = (*message)[3];
+    }
+	if( message->size() > 4 )
 	{
+		printf( "MIDI message size too large, cannot process." );
 		return;
 	}
-
-	// Don't bother to process MIDI port close messages.
-	if( wMsg == MIM_CLOSE ) // 962
-		return;
-
-	// TODO: Make this one big switch statement.
-    //int b = MIM_DATA;
-    //int c = MIM_ERROR;
-    //int d = MIM_LONGDATA;
-    //int e = MIM_LONGERROR;
-    //int f = MIM_MOREDATA;
-    //int h = MM_MIM_CLOSE;
-    //int i = MM_MIM_DATA;
-    //int j = MM_MIM_ERROR;
-    //int k = MM_MIM_LONGDATA;
-    //int l = MM_MIM_LONGERROR;
-    //int m = MM_MIM_MOREDATA;
-    //int n = MM_MIM_OPEN;
-    //int o = MM_MOM_CLOSE;
-    //int p = MM_MOM_DONE;
-    //int q = MM_MOM_OPEN;
-    //int r = MM_MOM_POSITIONCB;
-    //int s = MOM_CLOSE;
-    //int t = MOM_DONE;
-    //int u = MOM_OPEN;
-    //int v = MOM_POSITIONCB;
-
-	if( wMsg == MIM_DATA )
-	{
-		key->ProcessMidiMessage(dwParam1, dwParam2);
-	}
+	key->ProcessMidiMessage(a, b, c, d);
 }
 
 /**
 * Handles incoming MIDI message data.
 */
-void wxKeyboard::ProcessMidiMessage(DWORD dwParam1, DWORD dwParam2)
+//void wxKeyboard::ProcessMidiMessage(DWORD dwParam1, DWORD dwParam2)
+void wxKeyboard::ProcessMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4)
+
 {
-	// 90 = Note on.
-	// 3c, 3e, 40, 41, 43 = Note number.
-	// 22, 3a, 4f = Note velocity.  If 0, is a note off.
-	int a = LOWORD(dwParam1);
-	int b = HIWORD(dwParam1);
-	int c = LOWORD(dwParam2);
-	int d = HIWORD(dwParam2);
-
-	// Check for note on/off.  The "zero" is actually our MIDI channel, and can be up to #16.
-	int loByteA = LOBYTE(a);
-	int hiByteA = HIBYTE(a);
-	int loByteB = LOBYTE(b);
-	int hiByteB = HIBYTE(b);
-
 	// MIDI timimg clock pulse.  Doesn't mean anything to us.
-	if( a == 0xF8 )
+	if( byte4 == 0xF8 )
 	{
 		return;
 	}
 
 	// Active sensing message.  Doesn't mean anything to us.
-	if( a == 0xFE )
+	if( byte4 == 0xFE )
 	{
 		return;
 	}
 
-	if( loByteA == (0x90 + _inputChannel - 1) )
+	if( byte4 == (0x90 + _inputChannel - 1) )
 	{
-		if( loByteB > 0 )
+		if( byte2 > 0 )
 		{
-			_sample[hiByteA]->_volume = loByteB;
-			PlayNote(hiByteA);
+			_sample[byte3]->_volume = byte2;
+			PlayNote(byte3);
 		}
 		else
 		{
-			StopNote(hiByteA);
+			StopNote(byte3);
 		}
 		return;
 	}
 	// Note off (some keyboards send this instead of note on 0 velocity.
-	if( loByteA == (0x80 + _inputChannel - 1)  )
+	if( byte4 == (0x80 + _inputChannel - 1)  )
 	{
-		StopNote( hiByteA );
+		StopNote( byte3 );
 		return;
 	}
 	// Program change.
-	else if( loByteA == (0xC0 + _inputChannel - 1)  )
+	else if( byte4 == (0xC0 + _inputChannel - 1)  )
 	{
-		SetPatch( hiByteA );
+		SetPatch( byte3 );
 		return;
 	}
-	else if( loByteA == (0xB0 + _inputChannel - 1)  )
+	else if( byte4 == (0xB0 + _inputChannel - 1)  )
 	{
 		// All notes off.
-		if( hiByteA == 0x7B && loByteB == 0x00 )
+		if( byte3 == 0x7B && byte2 == 0x00 )
 		{
 			AllNotesOff();
 		}
@@ -1487,20 +1471,21 @@ void wxKeyboard::SelectMidiInputDevice(int number)
 	_midiInputDeviceNumber = number;
 #ifdef WIN32
 	// Close the old device
-	if( _midiInDevice != NULL )
+	try
 	{
-		midiInClose(_midiInDevice);
+		// Close existing MIDI device.
+		if( _midiInDevice != NULL )
+		{
+			_midiInDevice->closePort();
+		}
+		// Open the new MIDI Device
+		_midiInDevice->openPort(number);
+		_midiInDevice->setCallback(MidiMessageHandler);
 	}
-	/* Open the MIDI Device */
-	HRESULT result = midiInOpen(&_midiInDevice, _midiInputDeviceNumber, (DWORD)MidiMessageHandler, (DWORD)this, CALLBACK_FUNCTION);
-	if (result)
+	catch( RtMidiError &error )
 	{
-		wxMessageBox(wxString::Format(_("There was an error opening the MIDI input device %d: %d (%s)"), number, result, GetMidiError(result)), "MIDI Error");
-	}
-	result = midiInStart(_midiInDevice);
-	if (result)
-	{
-		wxMessageBox(wxString::Format(_("There was an error starting the MIDI input device %d: %d (%s)"), number, result, GetMidiError(result)), "MIDI Error");
+		wxMessageBox( wxString::FromAscii(error.what()), _("Error opening MIDI input"));
+		//wxMessageBox(wxString::Format(_("There was an error starting the MIDI input device %d: %d (%s)"), number, result, GetMidiError(result)), "MIDI Error");
 	}
 #endif
 }
@@ -1512,16 +1497,20 @@ void wxKeyboard::SelectMidiOutputDevice(int number)
 {
 	_midiOutputDeviceNumber = number;
 #ifdef WIN32
-	// Close the old device
-	if( _midiOutDevice != NULL )
+	try
 	{
-		midiOutClose(_midiOutDevice);
+		// Close the old device
+		if( _midiOutDevice != NULL )
+		{
+			_midiOutDevice->closePort();
+		}
+		// Open the MIDI Device
+		_midiOutDevice->openPort(number);
 	}
-	/* Open the MIDI Device */
-	HRESULT result = midiOutOpen(&_midiOutDevice, _midiOutputDeviceNumber, 0, 0, CALLBACK_WINDOW);
-	if (result)
+	catch( RtMidiError &error )
 	{
-		wxMessageBox(wxString::Format(_("There was an error opening the MIDI output device %d: %d (%s)"), number, result, GetMidiError(result)), "MIDI Error");
+		wxMessageBox(wxString::FromAscii(error.what()), _("Error opening MIDI output"));
+		//wxMessageBox(wxString::Format(_("There was an error opening the MIDI output device %d: %d (%s)"), number, result, GetMidiError(result)), "MIDI Error");
 	}
 #endif
 }
@@ -1549,10 +1538,11 @@ void wxKeyboard::OnPitchWheel( wxScrollEvent& event )
 	{
 		// 00 (not used), XX (coarse), XX (fine), 0xEx (message + channel)
 #ifdef WIN32
-		WORD loWord = MAKEWORD( coarse, 0 );
-		WORD hiWord = MAKEWORD( (223 + _outputChannel), fine );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( coarse, 0 );
+		//WORD hiWord = MAKEWORD( (223 + _outputChannel), fine );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, coarse, fine, 223 + _outputChannel );
 #endif
 	}
 	event.Skip();
@@ -1571,15 +1561,17 @@ void wxKeyboard::OnModWheel( wxScrollEvent& event )
 		// Modwheel message is two parts - coarse and fine.
 		// 00 (not used), 0xXX (value:coarse), 0x01 (controller), 0xBX (175 + channel)
 #ifdef WIN32
-		WORD loWord = MAKEWORD( coarse, 0 );
-		WORD hiWord = MAKEWORD( (175 + _outputChannel), 1 );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( coarse, 0 );
+		//WORD hiWord = MAKEWORD( (175 + _outputChannel), 1 );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, coarse, 1, 175 + _outputChannel );
 		// 00 (not used), 0xXX (value:fine), 0x21 (controller), 0xBX (175 + channel)
-		loWord = MAKEWORD( fine, 0 );
-		hiWord = MAKEWORD( (175 + _outputChannel), 0x21 );
-		fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//loWord = MAKEWORD( fine, 0 );
+		//hiWord = MAKEWORD( (175 + _outputChannel), 0x21 );
+		//fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, fine, 0x21, 175 + _outputChannel );
 #endif
 	}
 	event.Skip();
@@ -1606,10 +1598,11 @@ void wxKeyboard::AllSoundOff( void )
 	{
 		// 00 (not used), 0x00, 120, 0xBX (message + channel)
 #ifdef WIN32
-		WORD loWord = MAKEWORD( 0, 0 );
-		WORD hiWord = MAKEWORD( (175 + _outputChannel), 120 );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( 0, 0 );
+		//WORD hiWord = MAKEWORD( (175 + _outputChannel), 120 );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, 0, 120, 175 + _outputChannel );
 #endif
 	}
 }
@@ -1644,10 +1637,11 @@ void wxKeyboard::AllNotesOff( bool receivedFromMidi )
 	{
 		// 00 (not used), 0x00, 123, 0xBX (message + channel)
 #ifdef WIN32
-		WORD loWord = MAKEWORD( 0, 0 );
-		WORD hiWord = MAKEWORD( (175 + _outputChannel), 123 );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( 0, 0 );
+		//WORD hiWord = MAKEWORD( (175 + _outputChannel), 123 );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, 0, 123, 175 + _outputChannel );
 #endif
 	}
 	// Turn off any red dots.
@@ -1663,10 +1657,11 @@ void wxKeyboard::AllControllersOff( void )
 	{
 		// 00 (not used), 0x00, 121, 0xBX (message + channel)
 #ifdef WIN32
-		WORD loWord = MAKEWORD( 0, 0 );
-		WORD hiWord = MAKEWORD( (175 + _outputChannel), 121 );
-		DWORD fullWord = MAKELONG( hiWord, loWord );
-		midiOutShortMsg(_midiOutDevice, fullWord );
+		//WORD loWord = MAKEWORD( 0, 0 );
+		//WORD hiWord = MAKEWORD( (175 + _outputChannel), 121 );
+		//DWORD fullWord = MAKELONG( hiWord, loWord );
+		//midiOutShortMsg(_midiOutDevice, fullWord );
+		SendMidiMessage( 0, 0, 121, 175 + _outputChannel );
 #endif
 	}
 	// Reset modwheel position
@@ -1680,9 +1675,9 @@ void wxKeyboard::AllControllersOff( void )
 */
 void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 {
-	wxStandardPaths paths;
+	wxStandardPaths paths = wxStandardPaths::Get();
 	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxOPEN );
+	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
 
 	wxString filename;
 
@@ -1753,7 +1748,7 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 {
 #ifdef DEMOVERSION
 #else
-	wxStandardPaths paths;
+	wxStandardPaths paths = wxStandardPaths::Get();
 	wxString path = paths.GetDataDir() + _("\\patches");
 	wxFileDialog fdialog( this, _T("Save Config As"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
 
@@ -1879,15 +1874,15 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 {
 	// Show about box.
     wxAboutDialogInfo info;
-    info.SetVersion(_("1.0"));
-    info.SetCopyright(_("Copyright (c) 2006-2013 Zeta Centauri"));
+    info.SetVersion(_("1.1"));
+    info.SetCopyright(_("Copyright (c) 2006-2016 Zeta Centauri"));
 	info.AddDeveloper(_("Jason Champion"));
 	info.SetIcon(_icon);
 #ifdef DEMOVERSION
 	info.SetLicense(_("The demo version of SampliTron may be distributed freely.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2013 Zeta Centauri.  They may\nbe distributed freely and be used royalty-free for any purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron Demo"));
 #else
-	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2013 Zeta Centauri, Inc.  They may\nbe distributed freely and be used royalty-free for any purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
+	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri, Inc.  They may\nbe distributed freely and be used royalty-free for any purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron"));
 #endif
 	info.SetWebSite(_("http://zetacentauri.com"));
@@ -1985,27 +1980,20 @@ float wxKeyboard::GetEnvelopeVolume(int note, int playbackSamplePosition)
 	return 1.0f;
 }
 
-#ifdef WIN32
-wxString wxKeyboard::GetMidiError(int error)
+void wxKeyboard::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4, bool shortmsg)
 {
-	switch( error )
-	{
-	case MMSYSERR_ALLOCATED:
-		return wxString(_("The specified resource is already allocated."));
-	case MMSYSERR_BADDEVICEID:
-		return wxString(_("The specified device identifier is out of range."));
-	case MMSYSERR_INVALFLAG:
-		return wxString(_("The flags specified by dwFlags are invalid."));
-	case MMSYSERR_INVALPARAM:
-		return wxString(_("The specified pointer or structure is invalid."));
-	case MMSYSERR_NOMEM:	
-		return wxString(_("The system is unable to allocate or lock memory."));
-	case MIDIERR_NODEVICE:
-		return wxString(_("No MIDI port was found for the MIDI mapper."));
-	case MMSYSERR_INVALHANDLE:
-		return wxString(_("The specified device handle is invalid."));
-	default:
-		return wxString(_("Unknown error."));
-	}
-}
+    std::vector<unsigned char> msg;
+    msg.push_back(byte4);
+    msg.push_back(byte3);
+    if(!shortmsg)
+    {
+      msg.push_back(byte2);
+      if( byte1 != 0 )
+      {
+        msg.push_back(byte1);
+      }
+#ifndef VST
+      _midiOutDevice->sendMessage(&msg);
 #endif
+    }
+}

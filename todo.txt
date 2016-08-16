@@ -1,0 +1,29 @@
+* NOTES *
+
+- We will load the sample within the application (wxKeyboard) when the user clicks OK on the sample config dialog.
+- We will resample on play -- when the user clicks on the key to play the sample.
+- We will need a file format to save and load all of the sample data.  (Use Xerces as Algorhythmia does)
+- We will need to be able to enable/disable MIDI output.
+- Items #3, 4, 5, 6, 7, 8, 9, 10, 13 required for 1.0 release.
+
+
+TODO
+
+3. Add reading of incoming MIDI messages to trigger samples.  Process:
+   a. Note on.
+   b. Note off.
+   c. Pitch wheel.
+   d. All notes off.
+4. Add spin control to show anywhere from 3-8 octaves of keyboards (show/hide controls based on that).
+5. Add an ALT or CTRL key to light up all keys that have samples assigned.
+6. Add DirectX or OpenAL sound playback of samples.
+7. Add SoundTouch for sample stretching.
+8. Add button to main dialog for saving bank. [Done, add save function to program to save sample info.]
+9. Add button to main dialog for loading bank. [Done, add save function to program to save sample info.]
+10.Create custom slider for mod and pitch wheel. [Partially done, redraw sucks].
+12.Implement velocity switching.
+13.Add ability to map a single sample to the entire keyboard. (auto-scale to each key).
+14.Move MIDI settings to a separate dialog and create a MIDI icon to edit those parameters. (channel, in device, out device, out enabled).
+15.Add custom spin control to sample edit dialog.
+16.Find a way to embed all bitmaps into the project file.
+17.Fill in nearby key range by default (?)
