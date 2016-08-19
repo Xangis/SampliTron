@@ -1,4 +1,5 @@
 #include "sampledata.h"
+#include "wx/wx.h"
 
 /**
 * Constructor.

@@ -17,6 +17,8 @@ DefaultGroupName=Zeta Centauri\SampliTron
 LicenseFile=C:\Users\Xangis\code\SampliTron\Release\License.txt
 OutputDir=C:\Users\Xangis\code\SampliTron\installer
 OutputBaseFilename=SampliTron1.1Setup
+SetupIconFile=C:\Users\Xangis\code\SampliTron\Release\samplitron.ico
+UninstallDisplayIcon={app}\samplitron.ico
 Compression=lzma
 SolidCompression=yes
 
