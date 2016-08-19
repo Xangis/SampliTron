@@ -1,6 +1,7 @@
 # Sigmatizm makefile.  Requires wxWidgets.
-# Uses wxWidgets 2.8.
-WX_CONFIG := /usr/bin/wx-config
+# Uses wxWidgets 2.8 or newer to be on the path.
+# If wx-config is not on the path, replace it with the actual path, i.e. /usr/wx/wx-config.
+WX_CONFIG := wx-config
 
 # Main executable file
 PROGRAM = SampliTron

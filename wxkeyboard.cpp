@@ -161,9 +161,8 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
-	wxStandardPaths paths = wxStandardPaths::Get();
 #ifdef WIN32
-	wxFileName filename = paths.GetDataDir() + _("\\samplitron.htb");
+	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\samplitron.htb");
 #else
 	wxFileName filename = wxString(_("./samplitron.htb"));
 #endif
@@ -1770,7 +1769,7 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 		file.SetValue(wxString::Format(_("Key%dSpecified"), i),  wxString::Format(_("%d"), _sample[i]->_userSpecified ));
 		if( _sample[i]->_userSpecified )
 		{
-			wxString exePath = paths.GetDataDir().MakeLower();
+			wxString exePath = wxStandardPaths::Get().GetDataDir().MakeLower();
 			wxString fileLocation = _sample[i]->_filename.MakeLower();
 			if( fileLocation.StartsWith(exePath))
 			{
