@@ -27,7 +27,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -35,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,8 +78,8 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'">true</GenerateManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'">true</EmbedManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">Demo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">Demo\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">true</GenerateManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">true</EmbedManifest>
@@ -99,6 +99,8 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Debug;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Xangis\code\AudioFile;C:\Users\Xangis\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\rtmidi-2.1.0;F:\lib\libsndfile-1.0.25\include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Release;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">C:\Users\Xangis\code\AudioFile;C:\Users\Xangis\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\rtmidi-2.1.0;F:\lib\libsndfile-1.0.25\include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Demo;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -197,7 +199,7 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>wxmsw28_core.lib;wxmsw28_adv.lib;wxmsw28_html.lib;wxbase28_xml.lib;wxexpat.lib;wxbase28.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;rpcrt4.lib;wxtiff.lib;wxpng.lib;wxjpeg.lib;wxzlib.lib;winmm.lib;wxControls.lib;libsndfile-1.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw30u_core.lib;wxmsw30u_adv.lib;wxmsw30u_html.lib;wxbase30u_xml.lib;wxexpat.lib;wxbase30u.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;rpcrt4.lib;wxtiff.lib;wxpng.lib;wxjpeg.lib;wxzlib.lib;winmm.lib;wxAudioControls.lib;libsndfile-1.lib;dxguid.lib;rtmidi.lib;AudioFile.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SampliTron.exe</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>

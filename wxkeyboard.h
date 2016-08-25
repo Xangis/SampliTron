@@ -121,7 +121,6 @@ public:
 	void SetBank( int bank, bool receivedFromMidi = false );
 	void ShowMappedSamples( bool show );
     void OnMouseRelease( wxMouseEvent &event );
-    wxBitmap GetBitmapResource( const wxString& name );
     wxIcon GetIconResource( const wxString& name );
     static bool ShowToolTips();
 	int GetNumNotesPlaying();

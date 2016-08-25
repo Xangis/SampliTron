@@ -13,6 +13,21 @@
 #include "wx/wx.h"
 #include "wxkeyboard.h"
 
+// Icons and images
+#include "btn1sml.xpm"
+#include "btn1lrg.xpm"
+#include "wrench.xpm"
+#include "help.xpm"
+#include "info.xpm"
+#include "exclamation.xpm"
+#include "spin.xpm"
+#include "sliderbk.xpm"
+#include "sliderind.xpm"
+#include "midiport.xpm"
+#include "disk.xpm"
+#include "openfolder.xpm"
+#include "octave.xpm"
+
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
 
 BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
@@ -303,12 +318,6 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
-    wxImage spinImage;
-    spinImage.LoadFile( _("spin.bmp"), wxBITMAP_TYPE_BMP );
-    wxImage sliderBk;
-    sliderBk.LoadFile( _("sliderbk.bmp"), wxBITMAP_TYPE_BMP );
-    wxImage sliderInd;
-    sliderInd.LoadFile( _("sliderind.bmp"), wxBITMAP_TYPE_BMP );
 
     this->SetBackgroundColour(_backgroundColour);
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
@@ -328,7 +337,7 @@ void wxKeyboard::CreateControls()
 	itemBoxSizer3->Add(_bankText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	_bankSpin = new wxBitmapSpinButton( itemDialog1, ID_BANKSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
-    _bankSpin->SetBitmap( &spinImage );
+    _bankSpin->SetXpmBitmap(spin_xpm);
 	_bankSpin->Connect(ID_BANKSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	_bankSpin->SetToolTip( _("Change patch bank" ));
 	itemBoxSizer3->Add(_bankSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -344,12 +353,12 @@ void wxKeyboard::CreateControls()
     itemBoxSizer3->Add(_patchText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	_patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
-    _patchSpin->SetBitmap( &spinImage );
+    _patchSpin->SetXpmBitmap(spin_xpm);
 	_patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	_patchSpin->SetToolTip( _("Change patch number") );
 	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	wxBitmap panicBitmap( _("exclamation.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
 	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -357,7 +366,7 @@ void wxKeyboard::CreateControls()
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
-	wxBitmap infoBitmap( _("info.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
 	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -365,7 +374,7 @@ void wxKeyboard::CreateControls()
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _infoButton->SetToolTip(_("About SampliTron"));
 
-	wxBitmap helpBitmap( _("help.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
 	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -373,7 +382,7 @@ void wxKeyboard::CreateControls()
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
 
-	wxBitmap midiBitmap( _("midiport.bmp"), wxBITMAP_TYPE_BMP );
+	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -381,7 +390,7 @@ void wxKeyboard::CreateControls()
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change MIDI settings"));
 
-	wxBitmap settingsBitmap( _("wrench.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap settingsBitmap( wrench_xpm, wxBITMAP_TYPE_XPM );
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -407,7 +416,7 @@ void wxKeyboard::CreateControls()
 	//_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
  //   _filterButton->SetToolTip("Edit filter settings");
 
-	wxBitmap saveBitmap( _("disk.bmp"), wxBITMAP_TYPE_BMP );
+	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
 	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -419,7 +428,7 @@ void wxKeyboard::CreateControls()
     _saveButton->SetToolTip(_("Save Sampler Configuration to Disk"));
 #endif
 
-	wxBitmap loadBitmap( _("openfolder.bmp"), wxBITMAP_TYPE_BMP );
+	wxBitmap loadBitmap( openfolder_xpm, wxBITMAP_TYPE_XPM );
 	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -444,7 +453,7 @@ void wxKeyboard::CreateControls()
 	// We don't want to do this because the mod wheel is used to tweak currently-playing notes.
 	//_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
-    _pitchWheel->SetBitmaps( &sliderBk, &sliderInd );
+    _pitchWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
     itemBoxSizer12->Add( _pitchWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
@@ -453,18 +462,18 @@ void wxKeyboard::CreateControls()
 	// We don't want to do this because the mod wheel is used to tweak currently-playing notes.
 	//_modWheel->Connect(ID_MODWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
-	_modWheel->SetBitmaps( &sliderBk, &sliderInd );
+	_modWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
 	itemBoxSizer12->Add( _modWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
-    wxBitmap _octaveBitmap(itemDialog1->GetBitmapResource(_("octave.bmp")));
+	wxBitmap _octaveBitmap(octave_xpm, wxBITMAP_TYPE_XPM);
 	if( !_octaveBitmap.IsOk() )
 	{
 		wxMessageBox(_("Could not load octave.bmp. Files broken."), _("Missing File"));
 	}
-	wxBitmap* keyind1sml = new wxBitmap(_("btn1sml.xpm"), wxBITMAP_TYPE_XPM );
-	wxBitmap* keyind1lrg = new wxBitmap(_("btn1lrg.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap* keyind1sml = new wxBitmap(btn1sml_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap* keyind1lrg = new wxBitmap(btn1lrg_xpm, wxBITMAP_TYPE_XPM );
     _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 24, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[0], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[0]->SetBitmaps(keyind1sml, keyind1lrg);
@@ -516,18 +525,6 @@ void wxKeyboard::CreateControls()
 bool wxKeyboard::ShowToolTips()
 {
     return true;
-}
-
-wxBitmap wxKeyboard::GetBitmapResource( const wxString& name )
-{
-    // Bitmap retrieval
-    wxUnusedVar(name);
-    if (name == _T("octave.bmp"))
-    {
-        wxBitmap bitmap(_T("octave.bmp"), wxBITMAP_TYPE_BMP);
-        return bitmap;
-    }
-    return wxNullBitmap;
 }
 
 /**
