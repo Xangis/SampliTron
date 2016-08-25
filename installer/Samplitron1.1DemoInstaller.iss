@@ -5,18 +5,18 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{10216C99-86D8-452F-9667-6A85EC2ED5B2}
-AppName=SampliTron
-AppVerName=SampliTron 1.1
+AppId={{66C144EC-B7A0-459A-946B-63B447D1A45B}
+AppName=SampliTron Demo
+AppVerName=SampliTron 1.1 Demo
 AppPublisher=Zeta Centauri
 AppPublisherURL=http://zetacentauri.com
 AppSupportURL=http://zetacentauri.com
 AppUpdatesURL=http://zetacentauri.com
-DefaultDirName={pf}\Zeta Centauri\SampliTron
-DefaultGroupName=Zeta Centauri\SampliTron
-LicenseFile=C:\Users\Xangis\code\SampliTron\Release\License.txt
+DefaultDirName={pf}\Zeta Centauri\SampliTron Demo
+DefaultGroupName=Zeta Centauri\SampliTron Demo
+LicenseFile=C:\Users\Xangis\code\SampliTron\Demo\License.txt
 OutputDir=C:\Users\Xangis\code\SampliTron\installer
-OutputBaseFilename=SampliTron1.1Setup
+OutputBaseFilename=SampliTron1.1DemoSetup
 SetupIconFile=C:\Users\Xangis\code\SampliTron\Release\samplitron.ico
 UninstallDisplayIcon={app}\samplitron.ico
 Compression=lzma
@@ -31,25 +31,12 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "C:\Users\Xangis\code\SampliTron\Release\SampliTron.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\btn1lrg.xpm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\btn1sml.xpm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\disk.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\exclamation.xpm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\help.xpm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\info.xpm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\libsndfile-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\midiport.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\octave.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\openfolder.bmp"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\sliderbk.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\sliderind.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\spin.bmp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\wrench.xpm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Xangis\code\SampliTron\Release\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Xangis\code\SampliTron\Demo\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Xangis\code\SampliTron\Demo\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: "C:\Users\Xangis\code\SampliTron\Release\vcredist_x86.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 Source: "C:\Users\Xangis\code\SampliTron\Release\DirectX\DXSETUP.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
