@@ -52,7 +52,7 @@ Name: "{commondesktop}\SampliTron"; Filename: "{app}\SampliTron.exe"; Tasks: des
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\SampliTron"; Filename: "{app}\SampliTron.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
-Filename: "{app}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2008 Redistributable..."; Flags: waituntilterminated
+Filename: "{app}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2010 Redistributable..."; Flags: waituntilterminated
 Filename: "{app}\DXSETUP.exe"; Parameters: "/SILENT"; WorkingDir: "{app}";  StatusMsg: "Installing DirectX XAudio2 Redistributable..."; Flags: waituntilterminated
 Filename: "{app}\SampliTron.exe"; Description: "{cm:LaunchProgram,SampliTron}"; Flags: nowait postinstall skipifsilent
 

@@ -1,0 +1,24 @@
+Changes from Version 1.0 to 1.1:
+
+- Updated wxWidgets libraries.
+- Full version sample library expanded from 220 samples to 400.
+
+Demo Version Restrictions
+
+The demo version has the following restrictions:
+
+- Polyphony is restricted to 2 notes.
+- Sampler settings cannot be saved as new patches.
+- Only includes a library of 120 samples. The full version includes 220.
+
+Features
+
+- Control via external MIDI device.
+- Notes can be played using the computer keyboard.
+- Can generate MIDI controller data and be used to control external devices.
+- Keyboard configurable to show from 3 to 7 octaves.
+- Allows detailed splits with a different sample for each key.
+- Allows using .WAV samples of different bit depths and sample rates.
+- Automatically scales pitch of loaded samples.
+- Auomatically generates keyboard splits.
+- Easy to see which keys have samples loaded by pressing the ALT key.

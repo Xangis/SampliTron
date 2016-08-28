@@ -48,11 +48,11 @@ Source: "C:\Users\Xangis\code\SampliTron\Release\DirectX\Aug2009_XAudio_x86.cab"
 [Icons]
 Name: "{group}\SampliTron"; Filename: "{app}\SampliTron.exe"; WorkingDir: "{app}"
 Name: "{group}\{cm:ProgramOnTheWeb,SampliTron}"; Filename: "http://zetacentauri.com/software_samplitron.htm"
-Name: "{commondesktop}\SampliTron"; Filename: "{app}\SampliTron.exe"; Tasks: desktopicon; WorkingDir: "{app}"
+Name: "{commondesktop}\SampliTron Demo"; Filename: "{app}\SampliTron.exe"; Tasks: desktopicon; WorkingDir: "{app}"
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\SampliTron"; Filename: "{app}\SampliTron.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
-Filename: "{app}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2008 Redistributable..."; Flags: waituntilterminated
+Filename: "{app}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2010 Redistributable..."; Flags: waituntilterminated
 Filename: "{app}\DXSETUP.exe"; Parameters: "/SILENT"; WorkingDir: "{app}";  StatusMsg: "Installing DirectX XAudio2 Redistributable..."; Flags: waituntilterminated
 Filename: "{app}\SampliTron.exe"; Description: "{cm:LaunchProgram,SampliTron}"; Flags: nowait postinstall skipifsilent
 
