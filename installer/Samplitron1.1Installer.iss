@@ -36,7 +36,7 @@ Source: "C:\Users\Xangis\code\SampliTron\Release\License.txt"; DestDir: "{app}";
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Xangis\code\SampliTron\Release\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Xangis\code\SampliTron\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: "C:\Users\Xangis\code\SampliTron\Release\vcredist_x86.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 Source: "C:\Users\Xangis\code\SampliTron\Release\DirectX\DXSETUP.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall

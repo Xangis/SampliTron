@@ -275,7 +275,7 @@
   <Key73Looping Key73Looping="0"/>
   <Key73KeyboardNote Key73KeyboardNote="73"/>
   <Key73SampleNote Key73SampleNote="72"/>
-  <Key72SampleFile Key72SampleFile=".\samples\synthesizer\pads\yamaha-an1x-resonant-pad-c6.wav"/>
+  <Key72SampleFile Key72SampleFile=".\Samples\Synthesizer - Pads\Yamaha-AN1x-Resonant-Pad-C6.wav"/>
   <Key72Specified Key72Specified="1"/>
   <Key72Volume Key72Volume="127"/>
   <Key72Looping Key72Looping="0"/>
@@ -396,7 +396,7 @@
   <Key49Looping Key49Looping="0"/>
   <Key49KeyboardNote Key49KeyboardNote="49"/>
   <Key49SampleNote Key49SampleNote="48"/>
-  <Key48SampleFile Key48SampleFile=".\samples\synthesizer\pads\yamaha-an1x-resonant-pad-c4.wav"/>
+  <Key48SampleFile Key48SampleFile=".\Samples\Synthesizer - Pads\Yamaha-AN1x-Resonant-Pad-C4.wav"/>
   <Key48Specified Key48Specified="1"/>
   <Key48Volume Key48Volume="127"/>
   <Key48Looping Key48Looping="0"/>

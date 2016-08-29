@@ -152,28 +152,6 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     Centre();
 	_octave[0]->SetFocus();
 
-	// Open default MIDI devices.
-#ifdef WIN32
-	int numDevices = midiInGetNumDevs();
-	if( numDevices > 0 )
-	{
-		SelectMidiInputDevice(_midiInputDeviceNumber);
-	}
-	else
-	{
-		wxMessageBox(_("No MIDI input devices detected.  MIDI input is disabled."));
-	}
-	numDevices = midiOutGetNumDevs();
-	if( numDevices > 0 )
-	{
-		SelectMidiOutputDevice(_midiOutputDeviceNumber);
-	}
-	else
-	{
-		wxMessageBox(_("No MIDI output devices detected.  MIDI output is disabled."));
-	}
-#endif
-
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
 #ifdef WIN32
@@ -300,6 +278,28 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 		wxMessageBox(wxString::Format( _("Unable to set effect chain: %d\n"), hr ));
 	}
 	// End XAudio Setup
+#endif
+
+	// Open default MIDI devices.
+#ifdef WIN32
+	int numDevices = midiInGetNumDevs();
+	if( numDevices > 0 )
+	{
+		SelectMidiInputDevice(_midiInputDeviceNumber);
+	}
+	else
+	{
+		wxMessageBox(_("No MIDI input devices detected.  MIDI input is disabled."));
+	}
+	numDevices = midiOutGetNumDevs();
+	if( numDevices > 0 )
+	{
+		SelectMidiOutputDevice(_midiOutputDeviceNumber);
+	}
+	else
+	{
+		wxMessageBox(_("No MIDI output devices detected.  MIDI output is disabled."));
+	}
 #endif
 
 	// Above normal thread priority so we can monitor the sound buffer a little better.
@@ -748,7 +748,8 @@ void wxKeyboard::OnKeyDown( wxKeyEvent& event )
     int key = event.GetKeyCode();
 	if( key == WXK_ALT )
 	{
-		ShowMappedSamples(true);
+		// No longer necessary now that we always show them.
+		//ShowMappedSamples(true);
 		return;
 	}
     int note = GetNoteValue( key );
@@ -773,7 +774,7 @@ void wxKeyboard::OnKeyUp( wxKeyEvent& event )
 	int key = event.GetKeyCode();
 	if( key == WXK_ALT )
 	{
-		ShowMappedSamples(false);
+		//ShowMappedSamples(false);
 		return;
 	}
 	int note = GetNoteValue( key );
@@ -786,28 +787,28 @@ void wxKeyboard::OnKeyUp( wxKeyEvent& event )
     event.Skip(false);
 }
 
-void wxKeyboard::ShowMappedSamples(bool show)
-{
-	if( show )
-	{
-		bool keys[12];
-		for( int i = 0; i < MAX_OCTAVES; i++ )
-		{
-			for( int j = 0; j < 12; j++ )
-			{
-				keys[j] = _sample[(i*12+j+24)]->_userSpecified;
-				_octave[i]->SetIndicators(&keys[0]);
-			}
-		}
-	}
-	else
-	{
-		for( int i = 0; i < MAX_OCTAVES; i++ )
-		{
-			_octave[i]->ClearIndicators();
-		}
-	}
-}
+//void wxKeyboard::ShowMappedSamples(bool show)
+//{
+//	if( show )
+//	{
+//		bool keys[12];
+//		for( int i = 0; i < MAX_OCTAVES; i++ )
+//		{
+//			for( int j = 0; j < 12; j++ )
+//			{
+//				keys[j] = _sample[(i*12+j+24)]->_userSpecified;
+//				_octave[i]->SetIndicators(&keys[0]);
+//			}
+//		}
+//	}
+//	else
+//	{
+//		for( int i = 0; i < MAX_OCTAVES; i++ )
+//		{
+//			_octave[i]->ClearIndicators();
+//		}
+//	}
+//}
 
 /**
 * Gets the MIDI note number from a keyboard code.
@@ -1165,11 +1166,19 @@ void wxKeyboard::OnRightClick( int note )
 // is set.
 void wxKeyboard::RefreshSampleData()
 {
+	for( int i = 0; i < MAX_OCTAVES; i++ )
+	{
+		_octave[i]->ClearIndicators();
+	}
 	std::vector<int> specifiedSamples;
 	for( int i = 0; i < MAX_NOTES; i++ )
 	{
 		if( _sample[i]->_userSpecified == true )
+		{
 			specifiedSamples.push_back(i);
+			int octave = GetOctaveByNote(i);
+			_octave[octave]->IndicatorOn(i % 12);
+		}
 	}
 	//wxMessageBox(wxString::Format("%d samples have been specified.", specifiedSamples.size()));
 	if( specifiedSamples.size() == 0 )
@@ -1355,6 +1364,12 @@ void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message
 {
 	wxKeyboard* key = (wxKeyboard*)userData;
 
+	if( key == NULL )
+	{
+		wxMessageBox(_("MIDI System is Broken: this pointer is NULL."));
+		return;
+	}
+
     unsigned char a = 0;
     unsigned char b = 0;
     unsigned char c = 0;
@@ -1476,7 +1491,7 @@ void wxKeyboard::SelectMidiInputDevice(int number)
 		}
 		// Open the new MIDI Device
 		_midiInDevice->openPort(number);
-		_midiInDevice->setCallback(MidiMessageHandler);
+		_midiInDevice->setCallback(MidiMessageHandler, this);
 	}
 	catch( RtMidiError &error )
 	{
@@ -1875,10 +1890,10 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 	info.AddDeveloper(_("Jason Champion"));
 	info.SetIcon(_icon);
 #ifdef DEMOVERSION
-	info.SetLicense(_("The demo version of SampliTron may be distributed freely.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2013 Zeta Centauri.  They may\nbe distributed freely and be used royalty-free for any purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
+	info.SetLicense(_("The demo version of SampliTron may be distributed freely.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri.  They may\nbe distributed freely and be used royalty-free for any creative purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron Demo"));
 #else
-	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri, Inc.  They may\nbe distributed freely and be used royalty-free for any purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
+	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri, Inc.  They may\nbe distributed freely and be used royalty-free for any creative purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron"));
 #endif
 	info.SetWebSite(_("http://zetacentauri.com"));

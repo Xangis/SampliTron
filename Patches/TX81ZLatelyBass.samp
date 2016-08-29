@@ -395,7 +395,7 @@
   <Key49Looping Key49Looping="0"/>
   <Key49KeyboardNote Key49KeyboardNote="49"/>
   <Key49SampleNote Key49SampleNote="48"/>
-  <Key48SampleFile Key48SampleFile=".\samples\bass\synth\yamaha-tx81z-lately-bass-c4.wav"/>
+  <Key48SampleFile Key48SampleFile=".\Samples\Bass - Synth\Yamaha-TX81Z-Lately-Bass-c4.wav"/>
   <Key48Specified Key48Specified="1"/>
   <Key48Volume Key48Volume="127"/>
   <Key48Looping Key48Looping="0"/>
@@ -456,7 +456,7 @@
   <Key37Looping Key37Looping="0"/>
   <Key37KeyboardNote Key37KeyboardNote="37"/>
   <Key37SampleNote Key37SampleNote="36"/>
-  <Key36SampleFile Key36SampleFile=".\samples\bass\synth\yamaha-tx81z-lately-bass-c3.wav"/>
+  <Key36SampleFile Key36SampleFile=".\Samples\Bass - Synth\Yamaha-TX81Z-Lately-Bass-C3.wav"/>
   <Key36Specified Key36Specified="1"/>
   <Key36Volume Key36Volume="127"/>
   <Key36Looping Key36Looping="0"/>

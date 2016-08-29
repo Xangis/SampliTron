@@ -35,6 +35,7 @@ Source: "C:\Users\Xangis\code\SampliTron\Release\libsndfile-1.dll"; DestDir: "{a
 Source: "C:\Users\Xangis\code\SampliTron\Release\License.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.ico"; DestDir: "{app}"; Flags: ignoreversion
+; We're intentionally pulling samples and patches from the demo directory because they're a subset of what's in the root project directory.
 Source: "C:\Users\Xangis\code\SampliTron\Demo\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\Xangis\code\SampliTron\Demo\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

@@ -119,7 +119,7 @@ public:
 	void AllSoundOff( void );
 	void SetPatch( int patch, bool receivedFromMidi = false );
 	void SetBank( int bank, bool receivedFromMidi = false );
-	void ShowMappedSamples( bool show );
+	//void ShowMappedSamples( bool show );
     void OnMouseRelease( wxMouseEvent &event );
     wxIcon GetIconResource( const wxString& name );
     static bool ShowToolTips();

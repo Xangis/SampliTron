@@ -215,7 +215,7 @@
   <Key85Looping Key85Looping="0"/>
   <Key85KeyboardNote Key85KeyboardNote="85"/>
   <Key85SampleNote Key85SampleNote="84"/>
-  <Key84SampleFile Key84SampleFile=".\samples\synthesizer\strings\ensoniq-sq-80-strings-c7.wav"/>
+  <Key84SampleFile Key84SampleFile=".\Samples\Synthesizer - Strings\Ensoniq-SQ-80-Strings-C7.wav"/>
   <Key84Specified Key84Specified="1"/>
   <Key84Volume Key84Volume="127"/>
   <Key84Looping Key84Looping="0"/>
@@ -336,7 +336,7 @@
   <Key61Looping Key61Looping="0"/>
   <Key61KeyboardNote Key61KeyboardNote="61"/>
   <Key61SampleNote Key61SampleNote="60"/>
-  <Key60SampleFile Key60SampleFile=".\samples\synthesizer\strings\ensoniq-sq-80-strings-c5.wav"/>
+  <Key60SampleFile Key60SampleFile=".\Samples\Synthesizer - Strings\Ensoniq-SQ-80-Strings-C5.wav"/>
   <Key60Specified Key60Specified="1"/>
   <Key60Volume Key60Volume="127"/>
   <Key60Looping Key60Looping="0"/>
@@ -457,7 +457,7 @@
   <Key37Looping Key37Looping="0"/>
   <Key37KeyboardNote Key37KeyboardNote="37"/>
   <Key37SampleNote Key37SampleNote="36"/>
-  <Key36SampleFile Key36SampleFile=".\samples\synthesizer\strings\ensoniq-sq-80-strings-c3.wav"/>
+  <Key36SampleFile Key36SampleFile=".\Samples\Synthesizer - Strings\Ensoniq-SQ-80-Strings-C3.wav"/>
   <Key36Specified Key36Specified="1"/>
   <Key36Volume Key36Volume="127"/>
   <Key36Looping Key36Looping="0"/>

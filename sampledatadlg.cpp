@@ -56,19 +56,21 @@ void SampleDataDlg::CreateControls()
 {    
     SampleDataDlg* itemDialog1 = this;
 
+	wxSize spinTextSize = wxSize(64, -1);
+
     this->SetBackgroundColour(_backgroundColour);
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemBoxSizer3 = new wxFlexGridSizer(4, 2, 0, 0);
+    wxFlexGridSizer* itemBoxSizer3 = new wxFlexGridSizer(5, 2, 0, 0);
     itemBoxSizer2->Add(itemBoxSizer3, 0, 0, 0 );
 
     wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Sample Note:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText3->SetForegroundColour(_textColour);
     itemBoxSizer3->Add(itemStaticText3, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    _spnSampleNote = new wxSpinCtrl( itemDialog1, ID_SPIN_SAMPLENOTE, _T("64"), wxDefaultPosition, wxSize(54, -1), wxSP_ARROW_KEYS, 24, 107, 64 );
+    _spnSampleNote = new wxSpinCtrl( itemDialog1, ID_SPIN_SAMPLENOTE, _T("64"), wxDefaultPosition, spinTextSize, wxSP_ARROW_KEYS, 24, 107, 64 );
     itemBoxSizer3->Add(_spnSampleNote, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Keyboard Note:"), wxDefaultPosition, wxDefaultSize );
@@ -77,7 +79,7 @@ void SampleDataDlg::CreateControls()
 
 	wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
 
-	_spnKeyboardNote = new wxSpinCtrl( itemDialog1, ID_SPIN_KEYBOARDNOTE, _T("64"), wxDefaultPosition, wxSize(54, -1), wxSP_ARROW_KEYS, 24, 107, 64 );
+	_spnKeyboardNote = new wxSpinCtrl( itemDialog1, ID_SPIN_KEYBOARDNOTE, _T("64"), wxDefaultPosition, spinTextSize, wxSP_ARROW_KEYS, 24, 107, 64 );
 	_spnKeyboardNote->Enable(false);
     itemBoxSizer26->Add(_spnKeyboardNote, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -95,7 +97,7 @@ void SampleDataDlg::CreateControls()
     itemStaticText5->SetForegroundColour(_textColour);
     itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    _spnVolume = new wxSpinCtrl( itemDialog1, ID_SPIN_VOLUME, _T("127"), wxDefaultPosition, wxSize(54, -1), wxSP_ARROW_KEYS, 0, 127, 127 );
+    _spnVolume = new wxSpinCtrl( itemDialog1, ID_SPIN_VOLUME, _T("127"), wxDefaultPosition, spinTextSize, wxSP_ARROW_KEYS, 0, 127, 127 );
     itemBoxSizer3->Add(_spnVolume, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText55 = new wxStaticText( itemDialog1, wxID_STATIC, _("Loop Sample:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -105,21 +107,22 @@ void SampleDataDlg::CreateControls()
 	_chkLoop = new wxCheckBox( itemDialog1, ID_CHECK_LOOP, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
 	itemBoxSizer3->Add(_chkLoop, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5 );
 
-    wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer8, 0, 0, 0 );
-
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Filename:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText6->SetForegroundColour(_textColour);
-    itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText6, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    _txtFilename = new wxTextCtrl( itemDialog1, ID_TEXT_FILENAME, _T(""), wxDefaultPosition, wxSize(180, -1), 0 );
+    wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
+
+    _txtFilename = new wxTextCtrl( itemDialog1, ID_TEXT_FILENAME, _T(""), wxDefaultPosition, wxSize(200, -1), 0 );
     itemBoxSizer8->Add(_txtFilename, 0, wxGROW|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    _btnBrowse = new wxButton( itemDialog1, ID_BUTTON_BROWSE, _T("Browse" ));
+    itemBoxSizer8->Add(_btnBrowse, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+    itemBoxSizer3->Add(itemBoxSizer8, 0, 0, 0 );
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0 );
-
-    _btnBrowse = new wxButton( itemDialog1, ID_BUTTON_BROWSE, _T("Browse" ));
-    itemBoxSizer7->Add(_btnBrowse, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     _btnClear = new wxButton( itemDialog1, ID_BUTTON_CLEAR, _T("Clear" ));
     itemBoxSizer7->Add(_btnClear, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
