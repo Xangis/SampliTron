@@ -1,8 +1,14 @@
+TODO:
+
+- Add a "clear all samples" button to clear everything from the keyboard.
+
 Changes from Version 1.0 to 1.1:
 
 - Updated wxWidgets libraries.
 - Full version sample library expanded from 220 samples to 400.
+- Demo sample library expanded from 120 samples to 180.
 - Keys will show a blue indicator at the top if they have a sample assigned.
+- Expanded release patches from 5 to 8.
 
 Demo Version Restrictions
 
@@ -10,7 +16,7 @@ The demo version has the following restrictions:
 
 - Polyphony is restricted to 2 notes.
 - Sampler settings cannot be saved as new patches.
-- Only includes a library of 160 samples. The full version includes 400.
+- Only includes a library of 180 samples. The full version includes 400.
 
 Features
 
