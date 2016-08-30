@@ -181,8 +181,11 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     hr = XAudio2Create( &_xAudio2, flags );
 	if( FAILED( hr ))
     {
-		wxMessageBox( wxString::Format(_("Unable to create IXAudio2 interface: %d\n"), hr ));
+		wxMessageBox( wxString::Format(_("Unable to create IXAudio2 interface: 0x%X (%d)\nYou may need to install (or reinstall) the DirectX redistributable.\nThis may help: https://www.microsoft.com/en-us/download/details.aspx?id=8109"), hr, hr ));
         CoUninitialize();
+		_xAudio2 = NULL;
+		// NOTE: Returning from here causes a "cannot stop thread" error when we exit the program.
+		// This is most likely because this->Run() is never called.
 		return false;
     }
 
