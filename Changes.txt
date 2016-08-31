@@ -1,6 +1,11 @@
 TODO:
 
 - Add a "clear all samples" button to clear everything from the keyboard.
+- Add saving and loading of filter settings to patches.
+
+Changes from Version 1.1 to 1.2:
+
+- Added filter settings button that lets you use a basic filter with notch, low-pass, high-pass, or band-pass filters.
 
 Changes from Version 1.0 to 1.1:
 

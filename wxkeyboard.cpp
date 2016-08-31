@@ -20,6 +20,7 @@
 #include "help.xpm"
 #include "info.xpm"
 #include "exclamation.xpm"
+#include "filter.xpm"
 #include "spin.xpm"
 #include "sliderbk.xpm"
 #include "sliderind.xpm"
@@ -411,13 +412,13 @@ void wxKeyboard::CreateControls()
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	//_midiButton->SetToolTip("Edit ADSR envelope settings");
 
-	//wxBitmap filterBitmap( "filter.xpm", wxBITMAP_TYPE_XPM );
-	//_filterButton = new wxBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	//itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
-	//_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	//_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	//_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
- //   _filterButton->SetToolTip("Edit filter settings");
+	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
+	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
+	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+    _filterButton->SetToolTip("Edit filter settings");
 
 	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
 	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
@@ -1888,7 +1889,7 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 {
 	// Show about box.
     wxAboutDialogInfo info;
-    info.SetVersion(_("1.1"));
+    info.SetVersion(_("1.2"));
     info.SetCopyright(_("Copyright (c) 2006-2016 Zeta Centauri"));
 	info.AddDeveloper(_("Jason Champion"));
 	info.SetIcon(_icon);

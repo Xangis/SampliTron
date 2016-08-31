@@ -18,6 +18,10 @@ Contents
 		<param name="Name" value="Sample Settings Dialog">
 		<param name="Local" value="samplesettings.htm">
 	</object>
+	<li><object type="text/sitemap">
+		<param name="Name" value="Filter Settings Dialog">
+		<param name="Local" value="filtersettings.htm">
+	</object>
 </ul>
 </body>
 </html>
