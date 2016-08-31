@@ -179,6 +179,7 @@ private:
     bool _playing[MAX_NOTES];
     wxOctaveCtrl* _octave[MAX_OCTAVES];
 	bool _midiOutputEnabled;
+	bool _filterEnabled;
 	wxIcon _icon;
 	AdsrParameters _adsrParameters;
 #ifdef WIN32

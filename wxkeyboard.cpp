@@ -88,6 +88,7 @@ wxKeyboard::~wxKeyboard()
 */
 bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
+	_filterEnabled = false;
 	_midiOutputEnabled = true;
 	_bufferSize = 50;
     for( int count = 0; count < 128; count++ )
@@ -1840,37 +1841,31 @@ void wxKeyboard::OnFilter( wxCommandEvent& event )
 #ifdef WIN32
 	dlg->SetFilterParameters(_filterParameters);
 	// Set enable state based on our settings.
-	if( _filterParameters.Frequency == 1.0f && _filterParameters.OneOverQ == 1.0f && _filterParameters.Type == LowPassFilter )
-	{
-		dlg->SetEnabled(false);
-	}
-	else
-	{
-		dlg->SetEnabled(true);
-	}
+	dlg->SetEnabled(_filterEnabled);
 	dlg->ShowModal();
 	// Enable or disable filter based on settings.
-	if( dlg->GetEnabled() == false )
-	{
-		// Set filter parameters to effectively bypassed.
-		_filterParameters.Frequency = 1.0f;
-		_filterParameters.OneOverQ = 1.0f;
-		_filterParameters.Type = LowPassFilter;
-	}
-	else
-	{
-		_filterParameters = dlg->GetFilterParameters();
-	}
+	_filterEnabled = dlg->GetEnabled();
+	// Set default filter parameters to effectively bypassed for use when filter is disabled.
+	XAUDIO2_FILTER_PARAMETERS params;
+	params.Frequency = 1.0f;
+	params.OneOverQ = 1.0f;
+	params.Type = LowPassFilter;
+	_filterParameters = dlg->GetFilterParameters();
 	// Change voice settings on ALL source voices.
+	HRESULT hr;
 	for( int i = 0; i < MAX_NOTES; i++ )
 	{
 		if( _sample[i]->_sourceVoice != NULL )
 		{
-			HRESULT hr = _sample[i]->_sourceVoice->SetFilterParameters(&_filterParameters, XAUDIO2_COMMIT_NOW );
-//			XAUDIO2_FILTER_PARAMETERS params;
-//			_sample[i]->_sourceVoice->GetFilterParameters(&params);
+			if( _filterEnabled )
+			{
+				hr = _sample[i]->_sourceVoice->SetFilterParameters(&_filterParameters, XAUDIO2_COMMIT_NOW );
+			}
+			else
+			{
+				hr = _sample[i]->_sourceVoice->SetFilterParameters(&params, XAUDIO2_COMMIT_NOW );
+			}
 			_xAudio2->CommitChanges(XAUDIO2_COMMIT_ALL);
-//			_sample[i]->_sourceVoice->GetFilterParameters(&params);
 			if( FAILED( hr ))
 			{
 				wxMessageBox( wxString::Format(_("Unable to create set source voice filter parameters: %d\n"), hr ));
