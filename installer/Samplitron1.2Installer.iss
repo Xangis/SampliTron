@@ -33,7 +33,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "C:\Users\Xangis\code\SampliTron\Release\SampliTron.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\libsndfile-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Xangis\code\SampliTron\helpfile\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\Xangis\code\SampliTron\Patches\*"; DestDir: "{app}\Patches"; Flags: ignoreversion recursesubdirs createallsubdirs

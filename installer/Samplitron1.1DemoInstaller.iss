@@ -33,7 +33,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "C:\Users\Xangis\code\SampliTron\Demo\SampliTron.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\libsndfile-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Xangis\code\SampliTron\helpfile\samplitron.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\SampliTron\Release\samplitron.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; We're intentionally pulling samples and patches from the demo directory because they're a subset of what's in the root project directory.
 Source: "C:\Users\Xangis\code\SampliTron\Demo\Samples\*"; DestDir: "{app}\Samples"; Flags: ignoreversion recursesubdirs createallsubdirs
