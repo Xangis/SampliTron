@@ -39,3 +39,4 @@
 *.pdb
 *.manifest
 *.cache
+*.unsuccessfulbuild
