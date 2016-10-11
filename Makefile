@@ -12,7 +12,7 @@ INCLUDEDIR2 = ../../lib/libsndfile-1.0.27/include/
 INCLUDEDIR3 = ../../lib/rtmidi-2.1.0
 
 # Object files
-OBJECTS = SettingsDlg.o $(INCLUDEDIR3)/RtMidi.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboard.o wxkeyboardapp.o sampledatadlg.o wxADSRDlg.o sampledata.o wavefile.o wxFilterSettingsDlg.o
+OBJECTS = SettingsDlg.o $(INCLUDEDIR3)/RtMidi.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboardapp.o sampledatadlg.o ../wxAudioControls/wxADSRDlg.o sampledata.o ../AudioFile/wavefile.o ../wxAudioControls/wxFilterSettingsDlg.o wxkeyboard.o
 
 CXX = $(shell $(WX_CONFIG) --cxx -ggdb)
 
