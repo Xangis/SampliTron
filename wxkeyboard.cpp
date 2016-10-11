@@ -5,9 +5,9 @@
 #include "wx/aboutdlg.h"
 #include "sampledatadlg.h"
 #include "SettingsDlg.h"
-#include "wxMidiSettingsDlg.h"
-#include "wxWaveVisualizer.h"
-#include "wxFilterSettingsDlg.h"
+#include "../wxAudioControls/wxMidiSettingsDlg.h"
+#include "../wxAudioControls/wxWaveVisualizer.h"
+#include "../wxAudioControls/wxFilterSettingsDlg.h"
 #include <vector>
 
 #include "wx/wx.h"
