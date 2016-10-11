@@ -25,7 +25,7 @@ CXX = $(shell $(WX_CONFIG) --cxx -ggdb)
 all:    $(PROGRAM)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lasound -lpthread -lsndfile
+	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lpthread -lsndfile
 
 clean: 
 	rm -f *.o $(PROGRAM)

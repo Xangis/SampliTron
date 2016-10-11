@@ -1,5 +1,5 @@
 /* XPM */
-static char * octave_xpm[] = {
+static const char * octave_xpm[] = {
 "138 99 121 2",
 "  	c #131516",
 ". 	c #161819",

@@ -1,5 +1,5 @@
 /* XPM */
-static char * wrench_xpm[] = {
+static const char * wrench_xpm[] = {
 "18 18 75 1",
 " 	c #E5E4E8",
 ".	c #E4E3E7",

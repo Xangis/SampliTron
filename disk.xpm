@@ -1,5 +1,5 @@
 /* XPM */
-static char * disk_xpm[] = {
+static const char * disk_xpm[] = {
 "18 18 4 1",
 " 	c #E5E4E8",
 ".	c #4D4D4D",

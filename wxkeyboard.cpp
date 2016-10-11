@@ -334,7 +334,7 @@ void wxKeyboard::CreateControls()
     wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Bank"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText4->SetForegroundColour(_textColour);
 	itemStaticText4->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _bankText = new wxStaticText( itemDialog1, ID_BANKTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _bankText->SetForegroundColour(_textColour);
@@ -350,7 +350,7 @@ void wxKeyboard::CreateControls()
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("Patch"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText8->SetForegroundColour(_textColour);
 	itemStaticText8->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _patchText = new wxStaticText( itemDialog1, ID_PATCHTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _patchText->SetForegroundColour(_textColour);
