@@ -11,7 +11,7 @@
 #define SYMBOL_SETTINGSDLG_SIZE wxSize(400, 440)
 #define SYMBOL_SETTINGSDLG_POSITION wxDefaultPosition
 #define ID_SPN_NUMOCTAVES 19001
-#define ID_BTN_OK 19002
+#define ID_BTN_SETTINGS_OK 19002
 
 class SettingsDlg : public wxDialog
 {

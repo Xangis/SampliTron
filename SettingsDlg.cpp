@@ -6,7 +6,7 @@ IMPLEMENT_DYNAMIC_CLASS( SettingsDlg, wxDialog )
 
 BEGIN_EVENT_TABLE( SettingsDlg, wxDialog )
     EVT_CLOSE( SettingsDlg::OnClose )
-    EVT_BUTTON( ID_BTN_OK, SettingsDlg::OnOK )
+    EVT_BUTTON( ID_BTN_SETTINGS_OK, SettingsDlg::OnOK )
 END_EVENT_TABLE()
 
 SettingsDlg::SettingsDlg()
@@ -62,7 +62,7 @@ void SettingsDlg::CreateControls()
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0 );
 
-    _btnClose = new wxButton( itemDialog1, ID_BTN_OK, _T("OK" ));
+    _btnClose = new wxButton( itemDialog1, ID_BTN_SETTINGS_OK, _T("OK" ));
     itemBoxSizer7->Add(_btnClose, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 }
