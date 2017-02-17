@@ -41,3 +41,6 @@
 *.unsuccessfulbuild
 
 .DS_Store
+installer/Samplitron.app/Contents/Resources/Patches/
+installer/Samplitron.app/Contents/Resources/Samples/
+installer/Samplitron.app/Contents/_CodeSignature/
