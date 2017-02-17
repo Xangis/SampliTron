@@ -4,7 +4,7 @@
 WX_CONFIG := wx-config
 
 # Main executable file
-PROGRAM = SampliTron
+PROGRAM = installer/Samplitron.app/Contents/MacOS/SampliTron
 
 # Directory containing library portions of code.
 INCLUDEDIR = ../AudioFile/
