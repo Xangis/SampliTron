@@ -122,7 +122,7 @@ void SampleDataDlg::CreateControls()
     itemBoxSizer3->Add(itemBoxSizer8, 0, 0, 0 );
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0 );
+    itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 0 );
 
     _btnClear = new wxButton( itemDialog1, ID_BUTTON_CLEAR, _T("Clear" ));
     itemBoxSizer7->Add(_btnClear, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
