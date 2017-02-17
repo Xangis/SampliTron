@@ -449,11 +449,11 @@ void wxKeyboard::CreateControls()
 	wxBoxSizer* itemBoxSizer3b = new wxBoxSizer(wxVERTICAL);
 	_volumeMeterL = new wxVolumeMeter( itemDialog1, ID_VOLUME_LEFT, 100, wxDefaultPosition, wxSize(100, 10));
 	_volumeMeterL->Connect(ID_VOLUME_LEFT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-	itemBoxSizer3b->Add(_volumeMeterL, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemBoxSizer3b->Add(_volumeMeterL, 0, wxALL, 1);
 
 	_volumeMeterR = new wxVolumeMeter( itemDialog1, ID_VOLUME_RIGHT, 100, wxDefaultPosition, wxSize(100, 10));
 	_volumeMeterR->Connect(ID_VOLUME_RIGHT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-	itemBoxSizer3b->Add(_volumeMeterR, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemBoxSizer3b->Add(_volumeMeterR, 0, wxALL, 1);
 	itemBoxSizer3->Add(itemBoxSizer3b, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
@@ -464,7 +464,7 @@ void wxKeyboard::CreateControls()
 	//_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
     _pitchWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
-    itemBoxSizer12->Add( _pitchWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+    itemBoxSizer12->Add( _pitchWheel, 0, wxALL, 5 );
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
@@ -473,7 +473,7 @@ void wxKeyboard::CreateControls()
 	//_modWheel->Connect(ID_MODWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
 	_modWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
-	itemBoxSizer12->Add( _modWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	itemBoxSizer12->Add( _modWheel, 0, wxALL, 5 );
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 

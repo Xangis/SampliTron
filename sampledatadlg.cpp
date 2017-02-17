@@ -114,7 +114,7 @@ void SampleDataDlg::CreateControls()
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
 
     _txtFilename = new wxTextCtrl( itemDialog1, ID_TEXT_FILENAME, _T(""), wxDefaultPosition, wxSize(200, -1), 0 );
-    itemBoxSizer8->Add(_txtFilename, 0, wxGROW|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer8->Add(_txtFilename, 0, wxGROW|wxALIGN_LEFT|wxALL, 5);
 
     _btnBrowse = new wxButton( itemDialog1, ID_BUTTON_BROWSE, _T("Browse" ));
     itemBoxSizer8->Add(_btnBrowse, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
