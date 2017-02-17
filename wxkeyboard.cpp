@@ -329,6 +329,13 @@ void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
 
+    int buttonHeight = 26;
+    int buttonMargin = 3;
+#ifndef WIN32
+     buttonHeight = 28;
+     buttonMargin = 1;
+#endif
+
     this->SetBackgroundColour(_backgroundColour);
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
@@ -369,40 +376,40 @@ void wxKeyboard::CreateControls()
 	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
-	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
 	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
-	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _infoButton->SetToolTip(_("About SampliTron"));
 
 	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
-	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
 
 	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
-	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change MIDI settings"));
 
 	wxBitmap settingsBitmap( wrench_xpm, wxBITMAP_TYPE_XPM );
-	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -411,8 +418,8 @@ void wxKeyboard::CreateControls()
 	// The ADSR envelope does not work properly.  The problem is that for some reason, the envelope is only applied to the
 	// sample on the first play through.  Subsequent retriggers ignore the envelope settings.
 	//wxBitmap adsrBitmap( "adsr.xpm", wxBITMAP_TYPE_XPM );
-	//_adsrButton = new wxBitmapButton( itemDialog1, ID_ADSRBUTTON, adsrBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	//itemBoxSizer3->Add(_adsrButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	//_adsrButton = new wxBitmapButton( itemDialog1, ID_ADSRBUTTON, adsrBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	//itemBoxSizer3->Add(_adsrButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -420,8 +427,8 @@ void wxKeyboard::CreateControls()
 
 #ifdef WIN32
 	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
-	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -429,8 +436,8 @@ void wxKeyboard::CreateControls()
 #endif
 
 	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
-	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -441,8 +448,8 @@ void wxKeyboard::CreateControls()
 #endif
 
 	wxBitmap loadBitmap( openfolder_xpm, wxBITMAP_TYPE_XPM );
-	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
