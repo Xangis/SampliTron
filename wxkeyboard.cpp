@@ -159,17 +159,18 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 #ifndef __APPLE__
     wxString helpFile = _("samplitron.htb");
 #else
-#ifdef WIN32
-	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\samplitron.htb");
-#else
-	wxFileName filename = wxString(_("./samplitron.htb"));
+    wxString helpFile = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("samplitron.htb"));
 #endif
-#endif
-	if( !_helpCtrl->AddBook(filename))
+	if( !_helpCtrl->AddBook(helpFile))
 	{
 		wxMessageBox( _("Unable to load help file.  Please make sure that samplitron.htb is in the program directory.") );
 	}
-	if( _icon.LoadFile(_T("samplitron.ico"), wxBITMAP_TYPE_ICO ))
+#ifndef __APPLE__
+        wxString filepath = _("samplitron.ico");
+#else
+        wxString filepath = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("samplitron.ico"));
+#endif
+	if( _icon.LoadFile(filepath, wxBITMAP_TYPE_ICO ))
 	{
 		SetIcon(_icon);
 	}
