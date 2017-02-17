@@ -207,7 +207,12 @@ void SampleDataDlg::SetSample( SampleData* sample )
 */
 void SampleDataDlg::OnBrowse( wxCommandEvent& event )
 {
+#ifndef __APPLE__
 	wxFileDialog fdialog( this, _T("Choose a sample"), _T("./samples"), _T(""), _T("Wave Files (*.wav) |*.wav||"), wxFD_OPEN|wxFD_CHANGE_DIR );
+#else
+        wxString folderName = wxString::Format(_("%s/Samples/"), wxStandardPaths::Get().GetResourcesDir());
+        wxFileDialog fdialog( this, _("Choose a sample"), folderName, _(""), _("Wave Files (*.wav) |*.wav||"), wxFD_OPEN|wxFD_CHANGE_DIR );
+#endif
 
 	wxString filename;
 

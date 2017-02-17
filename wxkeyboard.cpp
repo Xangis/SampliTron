@@ -1705,9 +1705,14 @@ void wxKeyboard::AllControllersOff( void )
 */
 void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 {
-	wxStandardPaths paths = wxStandardPaths::Get();
-	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+        // This will probably only work right on Windows 7 or newer because XP has a different path structure.
+        wxString path = _(".\\Patches");
+#ifndef __APPLE__
+        wxFileDialog fdialog( this, _("Load A Config"), path, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+#else
+        wxString folderName = wxString::Format(_("%s/Patches/"), wxStandardPaths::Get().GetResourcesDir());
+	wxFileDialog fdialog( this, _("Load A Config"), folderName, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+#endif
 
 	wxString filename;
 
@@ -1778,9 +1783,13 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 {
 #ifdef DEMOVERSION
 #else
-	wxStandardPaths paths = wxStandardPaths::Get();
-	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Save Config As"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+    wxString path = wxStandardPaths::Get().GetUserConfigDir() + _("\\..\\Local\\Samplitron");
+#ifndef __APPLE__
+    wxFileDialog fdialog( this, _("Save Config As"), path, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+#else
+    wxString folderName = wxString::Format(_("%s/Patches/"), wxStandardPaths::Get().GetResourcesDir());
+    wxFileDialog fdialog( this, _("Save Config As"), folderName, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+#endif
 
 	wxString filename;
 
