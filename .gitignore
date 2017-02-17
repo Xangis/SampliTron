@@ -27,7 +27,6 @@
 # Executables
 *.exe
 *.out
-*.app
 
 # Visual Studio stuff.
 *.tlog
@@ -40,3 +39,5 @@
 *.manifest
 *.cache
 *.unsuccessfulbuild
+
+.DS_Store
