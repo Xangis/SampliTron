@@ -418,6 +418,7 @@ void wxKeyboard::CreateControls()
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	//_midiButton->SetToolTip("Edit ADSR envelope settings");
 
+#ifdef WIN32
 	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
 	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
@@ -425,6 +426,7 @@ void wxKeyboard::CreateControls()
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _filterButton->SetToolTip("Edit filter settings");
+#endif
 
 	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
 	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
@@ -1877,8 +1879,8 @@ void wxKeyboard::OnFilter( wxCommandEvent& event )
 			}
 		}
 	}
-#endif
 	delete dlg;
+#endif
 	event.Skip();
 }
 
