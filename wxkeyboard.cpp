@@ -566,7 +566,7 @@ void wxKeyboard::OnMidiSettings( wxCommandEvent& )
 	dlg->SetMidiOutputDeviceIndex(_midiOutputDeviceNumber );
 	dlg->SetMidiInputChannel(_inputChannel);
 	dlg->SetMidiOutputChannel(_outputChannel);
-#ifdef WIN32
+#ifndef linux
 	dlg->ShowModal();
 #else
     dlg->Show();
