@@ -156,10 +156,14 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
+#ifndef __APPLE__
+    wxString helpFile = _("samplitron.htb");
+#else
 #ifdef WIN32
 	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\samplitron.htb");
 #else
 	wxFileName filename = wxString(_("./samplitron.htb"));
+#endif
 #endif
 	if( !_helpCtrl->AddBook(filename))
 	{
