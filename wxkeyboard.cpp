@@ -1755,7 +1755,15 @@ void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 #else
                    // Need to prepend the path with the resource directory name for OSX.
                    value.Replace("\\", "/");
-                   wxString fileName = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), value);
+                   wxString fileName;
+                   if( value.StartsWith("./") )
+                   {
+                       fileName = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), value);
+                   }
+                   else
+                   {
+                       fileName = value;
+                   }
 #endif
 			_sample[i]->_filename = fileName;
 			if ( !LoadSample(i) )
@@ -1816,12 +1824,29 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 		file.SetValue(wxString::Format(_("Key%dSpecified"), i),  wxString::Format(_("%d"), _sample[i]->_userSpecified ));
 		if( _sample[i]->_userSpecified )
 		{
+#ifndef __APPLE__
 			wxString exePath = wxStandardPaths::Get().GetDataDir().MakeLower();
 			wxString fileLocation = _sample[i]->_filename.MakeLower();
 			if( fileLocation.StartsWith(exePath))
 			{
 				fileLocation = _(".") + fileLocation.SubString(exePath.Length(), (fileLocation.Length() - 1));
 			}
+#else
+                        // Translate this: /users/apple/code/samplitron/installer/samplitron.app/contents/resources/samples/bass - synth/synth-bass-stab-c3.wav
+                        // To this:        /samples/bass - synth/synth-bass-stab-c3.wav
+                        // But leave paths outside of the app directory alone.
+                        wxString fileLocation;
+                        if( _sample[i]->_filename.StartsWith(wxStandardPaths::Get().GetResourcesDir()) )
+                        {
+                            int prefixLength = wxStandardPaths::Get().GetResourcesDir().Length();
+                            fileLocation = wxString::Format(".%s", _sample[i]->_filename.Mid(prefixLength, wxString::npos) );
+                            fileLocation.Replace("/", "\\");
+                        }
+                        else
+                        {
+                            fileLocation = _sample[i]->_filename;
+                        }
+#endif
 			file.SetValue(wxString::Format(_("Key%dSampleFile"), i), fileLocation );
 		}
 	}
