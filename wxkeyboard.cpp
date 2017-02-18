@@ -1750,10 +1750,17 @@ void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 		value = file.GetValue(wxString::Format(_("Key%dSampleFile"), i));
 		if( value.Length() > 0 )
 		{
-			_sample[i]->_filename = value;
+#ifndef __APPLE__
+                   wxString fileName = value;
+#else
+                   // Need to prepend the path with the resource directory name for OSX.
+                   value.Replace("\\", "/");
+                   wxString fileName = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), value);
+#endif
+			_sample[i]->_filename = fileName;
 			if ( !LoadSample(i) )
 			{
-				failures = failures.Append(wxString::Format(_("Unable to load sample %s.\n"), _sample[i]->_filename.c_str()));
+				failures = failures.Append(wxString::Format(_("Unable to load sample %s from %s.\n"), value.c_str(), fileName.c_str()));
 			}
 		}
 		value = file.GetValue(wxString::Format(_("Key%dVolume"), i));
