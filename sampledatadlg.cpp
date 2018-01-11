@@ -114,7 +114,7 @@ void SampleDataDlg::CreateControls()
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
 
     _txtFilename = new wxTextCtrl( itemDialog1, ID_TEXT_FILENAME, _T(""), wxDefaultPosition, wxSize(200, -1), 0 );
-    itemBoxSizer8->Add(_txtFilename, 0, wxGROW|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer8->Add(_txtFilename, 0, wxGROW|wxALIGN_LEFT|wxALL, 5);
 
     _btnBrowse = new wxButton( itemDialog1, ID_BUTTON_BROWSE, _T("Browse" ));
     itemBoxSizer8->Add(_btnBrowse, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -122,7 +122,7 @@ void SampleDataDlg::CreateControls()
     itemBoxSizer3->Add(itemBoxSizer8, 0, 0, 0 );
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0 );
+    itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 0 );
 
     _btnClear = new wxButton( itemDialog1, ID_BUTTON_CLEAR, _T("Clear" ));
     itemBoxSizer7->Add(_btnClear, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -207,7 +207,12 @@ void SampleDataDlg::SetSample( SampleData* sample )
 */
 void SampleDataDlg::OnBrowse( wxCommandEvent& event )
 {
+#ifndef __APPLE__
 	wxFileDialog fdialog( this, _T("Choose a sample"), _T("./samples"), _T(""), _T("Wave Files (*.wav) |*.wav||"), wxFD_OPEN|wxFD_CHANGE_DIR );
+#else
+        wxString folderName = wxString::Format(_("%s/Samples/"), wxStandardPaths::Get().GetResourcesDir());
+        wxFileDialog fdialog( this, _("Choose a sample"), folderName, _(""), _("Wave Files (*.wav) |*.wav||"), wxFD_OPEN|wxFD_CHANGE_DIR );
+#endif
 
 	wxString filename;
 

@@ -156,16 +156,21 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
-#ifdef WIN32
-	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\samplitron.htb");
+#ifndef __APPLE__
+    wxString helpFile = _("samplitron.htb");
 #else
-	wxFileName filename = wxString(_("./samplitron.htb"));
+    wxString helpFile = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("samplitron.htb"));
 #endif
-	if( !_helpCtrl->AddBook(filename))
+	if( !_helpCtrl->AddBook(helpFile))
 	{
 		wxMessageBox( _("Unable to load help file.  Please make sure that samplitron.htb is in the program directory.") );
 	}
-	if( _icon.LoadFile(_T("samplitron.ico"), wxBITMAP_TYPE_ICO ))
+#ifndef __APPLE__
+        wxString filepath = _("samplitron.ico");
+#else
+        wxString filepath = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("samplitron.ico"));
+#endif
+	if( _icon.LoadFile(filepath, wxBITMAP_TYPE_ICO ))
 	{
 		SetIcon(_icon);
 	}
@@ -324,6 +329,13 @@ void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
 
+    int buttonHeight = 26;
+    int buttonMargin = 3;
+#ifndef WIN32
+     buttonHeight = 28;
+     buttonMargin = 1;
+#endif
+
     this->SetBackgroundColour(_backgroundColour);
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
@@ -364,40 +376,40 @@ void wxKeyboard::CreateControls()
 	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
-	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
 	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
-	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _infoButton->SetToolTip(_("About SampliTron"));
 
 	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
-	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
 
 	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
-	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change MIDI settings"));
 
 	wxBitmap settingsBitmap( wrench_xpm, wxBITMAP_TYPE_XPM );
-	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -406,24 +418,26 @@ void wxKeyboard::CreateControls()
 	// The ADSR envelope does not work properly.  The problem is that for some reason, the envelope is only applied to the
 	// sample on the first play through.  Subsequent retriggers ignore the envelope settings.
 	//wxBitmap adsrBitmap( "adsr.xpm", wxBITMAP_TYPE_XPM );
-	//_adsrButton = new wxBitmapButton( itemDialog1, ID_ADSRBUTTON, adsrBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	//itemBoxSizer3->Add(_adsrButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	//_adsrButton = new wxBitmapButton( itemDialog1, ID_ADSRBUTTON, adsrBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	//itemBoxSizer3->Add(_adsrButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	//_midiButton->SetToolTip("Edit ADSR envelope settings");
 
+#ifdef WIN32
 	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
-	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _filterButton->SetToolTip("Edit filter settings");
+#endif
 
 	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
-	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -434,8 +448,8 @@ void wxKeyboard::CreateControls()
 #endif
 
 	wxBitmap loadBitmap( openfolder_xpm, wxBITMAP_TYPE_XPM );
-	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3 );
+	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
+	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
@@ -444,11 +458,11 @@ void wxKeyboard::CreateControls()
 	wxBoxSizer* itemBoxSizer3b = new wxBoxSizer(wxVERTICAL);
 	_volumeMeterL = new wxVolumeMeter( itemDialog1, ID_VOLUME_LEFT, 100, wxDefaultPosition, wxSize(100, 10));
 	_volumeMeterL->Connect(ID_VOLUME_LEFT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-	itemBoxSizer3b->Add(_volumeMeterL, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemBoxSizer3b->Add(_volumeMeterL, 0, wxALL, 1);
 
 	_volumeMeterR = new wxVolumeMeter( itemDialog1, ID_VOLUME_RIGHT, 100, wxDefaultPosition, wxSize(100, 10));
 	_volumeMeterR->Connect(ID_VOLUME_RIGHT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-	itemBoxSizer3b->Add(_volumeMeterR, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemBoxSizer3b->Add(_volumeMeterR, 0, wxALL, 1);
 	itemBoxSizer3->Add(itemBoxSizer3b, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
@@ -459,7 +473,7 @@ void wxKeyboard::CreateControls()
 	//_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
     _pitchWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
-    itemBoxSizer12->Add( _pitchWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+    itemBoxSizer12->Add( _pitchWheel, 0, wxALL, 5 );
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
@@ -468,7 +482,7 @@ void wxKeyboard::CreateControls()
 	//_modWheel->Connect(ID_MODWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
 	_modWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
-	itemBoxSizer12->Add( _modWheel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	itemBoxSizer12->Add( _modWheel, 0, wxALL, 5 );
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
@@ -559,7 +573,7 @@ void wxKeyboard::OnMidiSettings( wxCommandEvent& )
 	dlg->SetMidiOutputDeviceIndex(_midiOutputDeviceNumber );
 	dlg->SetMidiInputChannel(_inputChannel);
 	dlg->SetMidiOutputChannel(_outputChannel);
-#ifdef WIN32
+#ifndef linux
 	dlg->ShowModal();
 #else
     dlg->Show();
@@ -1691,9 +1705,14 @@ void wxKeyboard::AllControllersOff( void )
 */
 void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 {
-	wxStandardPaths paths = wxStandardPaths::Get();
-	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Load A Config"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+        // This will probably only work right on Windows 7 or newer because XP has a different path structure.
+        wxString path = _(".\\Patches");
+#ifndef __APPLE__
+        wxFileDialog fdialog( this, _("Load A Config"), path, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+#else
+        wxString folderName = wxString::Format(_("%s/Patches/"), wxStandardPaths::Get().GetResourcesDir());
+	wxFileDialog fdialog( this, _("Load A Config"), folderName, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_OPEN );
+#endif
 
 	wxString filename;
 
@@ -1731,10 +1750,25 @@ void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 		value = file.GetValue(wxString::Format(_("Key%dSampleFile"), i));
 		if( value.Length() > 0 )
 		{
-			_sample[i]->_filename = value;
+#ifndef __APPLE__
+                   wxString fileName = value;
+#else
+                   // Need to prepend the path with the resource directory name for OSX.
+                   value.Replace("\\", "/");
+                   wxString fileName;
+                   if( value.StartsWith("./") )
+                   {
+                       fileName = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), value);
+                   }
+                   else
+                   {
+                       fileName = value;
+                   }
+#endif
+			_sample[i]->_filename = fileName;
 			if ( !LoadSample(i) )
 			{
-				failures = failures.Append(wxString::Format(_("Unable to load sample %s.\n"), _sample[i]->_filename.c_str()));
+				failures = failures.Append(wxString::Format(_("Unable to load sample %s from %s.\n"), value.c_str(), fileName.c_str()));
 			}
 		}
 		value = file.GetValue(wxString::Format(_("Key%dVolume"), i));
@@ -1764,9 +1798,13 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 {
 #ifdef DEMOVERSION
 #else
-	wxStandardPaths paths = wxStandardPaths::Get();
-	wxString path = paths.GetDataDir() + _("\\patches");
-	wxFileDialog fdialog( this, _T("Save Config As"), path, _T(""), _T("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+    wxString path = wxStandardPaths::Get().GetUserConfigDir() + _("\\..\\Local\\Samplitron");
+#ifndef __APPLE__
+    wxFileDialog fdialog( this, _("Save Config As"), path, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+#else
+    wxString folderName = wxString::Format(_("%s/Patches/"), wxStandardPaths::Get().GetResourcesDir());
+    wxFileDialog fdialog( this, _("Save Config As"), folderName, _(""), _("Sampler Configurations (*.samp) |*.samp||"), wxFD_SAVE );
+#endif
 
 	wxString filename;
 
@@ -1786,12 +1824,29 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 		file.SetValue(wxString::Format(_("Key%dSpecified"), i),  wxString::Format(_("%d"), _sample[i]->_userSpecified ));
 		if( _sample[i]->_userSpecified )
 		{
+#ifndef __APPLE__
 			wxString exePath = wxStandardPaths::Get().GetDataDir().MakeLower();
 			wxString fileLocation = _sample[i]->_filename.MakeLower();
 			if( fileLocation.StartsWith(exePath))
 			{
 				fileLocation = _(".") + fileLocation.SubString(exePath.Length(), (fileLocation.Length() - 1));
 			}
+#else
+                        // Translate this: /users/apple/code/samplitron/installer/samplitron.app/contents/resources/samples/bass - synth/synth-bass-stab-c3.wav
+                        // To this:        /samples/bass - synth/synth-bass-stab-c3.wav
+                        // But leave paths outside of the app directory alone.
+                        wxString fileLocation;
+                        if( _sample[i]->_filename.StartsWith(wxStandardPaths::Get().GetResourcesDir()) )
+                        {
+                            int prefixLength = wxStandardPaths::Get().GetResourcesDir().Length();
+                            fileLocation = wxString::Format(".%s", _sample[i]->_filename.Mid(prefixLength, wxString::npos) );
+                            fileLocation.Replace("/", "\\");
+                        }
+                        else
+                        {
+                            fileLocation = _sample[i]->_filename;
+                        }
+#endif
 			file.SetValue(wxString::Format(_("Key%dSampleFile"), i), fileLocation );
 		}
 	}
@@ -1872,8 +1927,8 @@ void wxKeyboard::OnFilter( wxCommandEvent& event )
 			}
 		}
 	}
-#endif
 	delete dlg;
+#endif
 	event.Skip();
 }
 
@@ -1892,7 +1947,7 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 	info.SetLicense(_("The demo version of SampliTron may be distributed freely.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri.  They may\nbe distributed freely and be used royalty-free for any creative purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron Demo"));
 #else
-	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri, Inc.  They may\nbe distributed freely and be used royalty-free for any creative purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
+	info.SetLicense(_("SampliTron is copyrighted software and may not be distributed without a license.\n\nThe included samples are from FreeWaveSamples.com and\nare copyright (c) 2006-2016 Zeta Centauri.  They may\nbe distributed freely and be used royalty-free for any creative purpose.\n\nThe software is provided 'as is', without warranty of any kind,\nexpress or implied, including but not limited to the warranties\nof merchantability, fitness for a particular purpose and\nnoninfringement.  In no event shall the authors or copyright\nholders be liable for any claim, damages or other liability,\nwhether in an action of contract, tort or otherwise, arising\nfrom, out of or in connection with the software or the use\nor other dealings in the software."));
     info.SetName(_("SampliTron"));
 #endif
 	info.SetWebSite(_("http://zetacentauri.com"));

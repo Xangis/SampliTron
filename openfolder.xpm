@@ -1,7 +1,7 @@
 /* XPM */
 static const char * openfolder_xpm[] = {
 "18 18 5 1",
-" 	c #E5E4E8",
+" 	c None",
 ".	c #4D4D4D",
 "+	c #FFFF4D",
 "@	c #FFFFFF",
