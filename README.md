@@ -61,6 +61,9 @@ https://github.com/xangis/AudioFile
 
 https://github.com/xangis/wxAudioControls
 
+They should be checked out into the same parent folder as SampliTron, so you have "AudioFile",
+"SampliTron", and "wxAudioControls" directories in the same folder (as neighbors).
+
 This app requires wxWdgets 2.8 or newer (preferably 3.0), libportaudio-dev, libasound2-dev,
 and libsndfile-dev.
 
