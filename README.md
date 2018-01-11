@@ -15,7 +15,7 @@ Beginners new to the creation of sample-based music should also find this to be 
 tool for experimentation and learning. SampliTron can be used quickly, without needing to 
 read a complicated two-inch-thick manual.
 
-Features
+## Features
 
 - Control via external MIDI device.
 - Notes can be played using the computer keyboard.
@@ -27,7 +27,7 @@ Features
 - Auomatically generates keyboard splits.
 - Easy to see which keys have samples loaded by pressing the ALT key.
 
-Getting Started
+## Getting Started
 
 It is very easy to use. To get started, right click on one of the keys to load a sample.
 Click "Browse" to select a .wav file and click "OK" when you've selected one.
@@ -54,8 +54,19 @@ selected MIDI out device when you trigger samples with your computer keyboard.
 
 ### Building
 
+This project depends on the wxAudioControls and AudioFile repositories, also available via my
+GitHub account:
+
+https://github.com/xangis/AudioFile
+
+https://github.com/xangis/wxAudioControls
+
 This app requires wxWdgets 2.8 or newer (preferably 3.0), libportaudio-dev, libasound2-dev,
 and libsndfile-dev.
+
+On linux, you can get requirements with:
+
+sudo apt-get install libwxgtk3.0-dev librtmidi-dev libsndfile1-dev libportaudio-dev
 
 ### Problems
 

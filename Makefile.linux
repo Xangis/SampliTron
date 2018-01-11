@@ -7,23 +7,23 @@ WX_CONFIG := wx-config
 PROGRAM = SampliTron
 
 # Directory containing library portions of code.
-INCLUDEDIR3 = ../../lib/rtmidi-2.1.0
+INCLUDEDIR = ../../AudioFile
 
 # Object files
-OBJECTS = SettingsDlg.o $(INCLUDEDIR3)/RtMidi.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboard.o wxkeyboardapp.o sampledatadlg.o wxADSRDlg.o sampledata.o wavefile.o wxFilterSettingsDlg.o
+OBJECTS = SettingsDlg.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboard.o wxkeyboardapp.o sampledatadlg.o ../wxAudioControls/wxADSRDlg.o sampledata.o ../AudioFile/wavefile.o ../wxAudioControls/wxFilterSettingsDlg.o
 
 CXX = $(shell $(WX_CONFIG) --cxx -ggdb)
 
 .SUFFIXES:	.o .cpp
 
 .cpp.o :
-#	$(CXX) -c -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR3) `$(WX_CONFIG) --cxxflags` -o $@ $<
-	$(CXX) -c -g -ggdb -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR3) `$(WX_CONFIG) --cxxflags` -o $@ $<
+#	$(CXX) -c -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR) `$(WX_CONFIG) --cxxflags` -o $@ $<
+	$(CXX) -c -g -ggdb -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR) `$(WX_CONFIG) --cxxflags` -o $@ $<
 
 all:    $(PROGRAM)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lasound -lpthread -lsndfile
+	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lasound -lpthread -lsndfile -lrtmidi
 
 clean: 
 	rm -f *.o $(PROGRAM)
