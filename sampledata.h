@@ -2,7 +2,7 @@
 #define _SAMPLEDATA_H_
 
 #include "wx/string.h"
-#include "wavefile.h"
+#include "../AudioFile/wavefile.h"
 #ifdef WIN32
 #include <xaudio2.h>
 #endif
