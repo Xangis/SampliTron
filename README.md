@@ -73,7 +73,8 @@ sudo apt-get install libwxgtk3.0-dev librtmidi-dev libsndfile1-dev libportaudio-
 
 ### Problems
 
-It will not currently build on Windows. I'm still tracking down some files needed by the 
-program.
+There are currently some build path issues that need to be resolved, so you may have trouble
+building on your system. I am willing to accept pull requests if you have fixes to contribute,
+otherwise they'll be addressed as I have time.
 
 On Linux, it will build but not produce sound (and the UI looks messed up).
