@@ -10,6 +10,7 @@ PROGRAM = installer/Samplitron.app/Contents/MacOS/SampliTron
 INCLUDEDIR = ../AudioFile/
 INCLUDEDIR2 = ../../lib/libsndfile-1.0.28/src
 INCLUDEDIR3 = ../../lib/rtmidi-4.0.0
+LIBDIR = ../../lib/libsndfile-1.0.28/src/.libs/
 
 # Object files
 OBJECTS = SettingsDlg.o $(INCLUDEDIR3)/RtMidi.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboardapp.o sampledatadlg.o ../wxAudioControls/wxADSRDlg.o sampledata.o ../AudioFile/wavefile.o ../wxAudioControls/wxFilterSettingsDlg.o wxkeyboard.o
@@ -25,7 +26,7 @@ CXX = $(shell $(WX_CONFIG) --cxx -ggdb)
 all:    $(PROGRAM)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lpthread -lsndfile -framework CoreMidi -framework CoreAudio
+	$(CXX) -o $(PROGRAM) $(OBJECTS) -L$(LIBDIR) `$(WX_CONFIG) --libs` -lpthread -lsndfile -framework CoreMidi -framework CoreAudio
 
 clean: 
 	rm -f *.o $(PROGRAM)
