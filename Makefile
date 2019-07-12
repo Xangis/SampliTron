@@ -9,7 +9,7 @@ PROGRAM = installer/Samplitron.app/Contents/MacOS/SampliTron
 # Directory containing library portions of code.
 INCLUDEDIR = ../AudioFile/
 INCLUDEDIR2 = ../../lib/libsndfile-1.0.27/include/
-INCLUDEDIR3 = ../../lib/rtmidi-2.1.0
+INCLUDEDIR3 = ../../lib/rtmidi-4.0.0
 
 # Object files
 OBJECTS = SettingsDlg.o $(INCLUDEDIR3)/RtMidi.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o wxkeyboardapp.o sampledatadlg.o ../wxAudioControls/wxADSRDlg.o sampledata.o ../AudioFile/wavefile.o ../wxAudioControls/wxFilterSettingsDlg.o wxkeyboard.o
