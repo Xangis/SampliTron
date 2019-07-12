@@ -8,7 +8,7 @@ PROGRAM = installer/Samplitron.app/Contents/MacOS/SampliTron
 
 # Directory containing library portions of code.
 INCLUDEDIR = ../AudioFile/
-INCLUDEDIR2 = ../../lib/libsndfile-1.0.27/include/
+INCLUDEDIR2 = ../../lib/libsndfile-1.0.28/src
 INCLUDEDIR3 = ../../lib/rtmidi-4.0.0
 
 # Object files
