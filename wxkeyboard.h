@@ -82,7 +82,11 @@ class wxSpinCtrl;
 /*!
  * wxKeyboard class declaration
  */
+#ifdef __APPLE__
+class wxKeyboard: public wxFrame, public wxThread, public OctaveCallback, public MidiSettingsInterface
+#else
 class wxKeyboard: public wxDialog, public wxThread, public OctaveCallback, public MidiSettingsInterface
+#endif
 {
     DECLARE_DYNAMIC_CLASS( wxKeyboard )
     DECLARE_EVENT_TABLE()

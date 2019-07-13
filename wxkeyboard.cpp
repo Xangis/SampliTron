@@ -29,9 +29,17 @@
 #include "openfolder.xpm"
 #include "octave.xpm"
 
+#ifdef __APPLE__
+IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxFrame )
+#else
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
+#endif
 
+#ifdef __APPLE__
+BEGIN_EVENT_TABLE( wxKeyboard, wxFrame )
+#else
 BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
+#endif
     EVT_CLOSE( wxKeyboard::OnCloseWindow )
     EVT_KEY_DOWN( wxKeyboard::OnKeyDown )
     EVT_KEY_UP( wxKeyboard::OnKeyUp )
@@ -51,6 +59,8 @@ BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
 	EVT_COMMAND_SCROLL( ID_MODWHEEL, wxKeyboard::OnModWheel )
 	EVT_COMMAND_SCROLL( ID_PITCHWHEEL, wxKeyboard::OnPitchWheel )
     EVT_LEFT_UP(wxKeyboard::OnMouseRelease) // Catches note off outside of an octave control.
+    EVT_MENU( wxID_HELP, wxKeyboard::OnHelp )
+    EVT_MENU( wxID_ABOUT, wxKeyboard::OnInfo )
 END_EVENT_TABLE()
 
 wxKeyboard::wxKeyboard()
@@ -148,7 +158,11 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	_midiOutputDeviceNumber = 0;  // Default Output
 	EnableMidiOutput(false);
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+#ifdef __APPLE__
+    wxFrame::Create( parent, id, caption, pos, size, style );
+#else
     wxDialog::Create( parent, id, caption, pos, size, style );
+#endif
 
     CreateControls();
     Centre();
@@ -328,6 +342,15 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
+
+#ifdef __APPLE__
+    wxMenu* helpMenu = new wxMenu();
+    helpMenu->Append(wxID_HELP);
+    helpMenu->Append(wxID_ABOUT);
+    wxMenuBar* menuBar = new wxMenuBar();
+    menuBar->Append( helpMenu, "&Help" );
+    SetMenuBar(menuBar);
+#endif
 
     int buttonHeight = 26;
     int buttonMargin = 3;
