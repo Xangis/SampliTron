@@ -406,6 +406,8 @@ void wxKeyboard::CreateControls()
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
+#ifndef __APPLE__
+    // For Apple, only include info and help on the menu.
 	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
 	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
@@ -421,6 +423,7 @@ void wxKeyboard::CreateControls()
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
+#endif
 
 	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );

@@ -120,3 +120,13 @@ The same goes for packing the executable.
 
 On Linux, it will build but not produce sound (and the UI looks messed up). This may no longer
 be true -- test for yourself and let me know.
+
+#### OSX Issues / TODO
+
+The sound level meter does not work.
+
+The XPM icons don't look good.
+
+Resizing to 4 octaves doesn't shrink the window size.
+
+
