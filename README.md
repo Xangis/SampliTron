@@ -129,4 +129,4 @@ The XPM icons don't look good.
 
 Resizing to 4 octaves doesn't shrink the window size.
 
-
+Audio does not work -- implement CoreAudio, RtAudio, or SDL_mixer.
