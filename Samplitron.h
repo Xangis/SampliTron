@@ -1,5 +1,5 @@
-#ifndef _WXKEYBOARD_H_
-#define _WXKEYBOARD_H_
+#ifndef _SAMPLITRON_H_
+#define _SAMPLITRON_H_
 
 #define MAX_OCTAVES 7
 #define MAX_NOTES 128
@@ -80,21 +80,17 @@ class wxSpinCtrl;
 #endif
 
 /*!
- * wxKeyboard class declaration
+ * Samplitron class declaration
  */
-#ifdef __APPLE__
-class wxKeyboard: public wxFrame, public wxThread, public OctaveCallback, public MidiSettingsInterface
-#else
-class wxKeyboard: public wxDialog, public wxThread, public OctaveCallback, public MidiSettingsInterface
-#endif
+class Samplitron: public wxFrame, public wxThread, public OctaveCallback, public MidiSettingsInterface
 {
-    DECLARE_DYNAMIC_CLASS( wxKeyboard )
+    DECLARE_DYNAMIC_CLASS( Samplitron )
     DECLARE_EVENT_TABLE()
 public:
     /// Constructors
-    wxKeyboard( );
-    wxKeyboard( wxWindow* parent, wxWindowID id = SYMBOL_WXKEYBOARD_IDNAME, const wxString& caption = SYMBOL_WXKEYBOARD_TITLE, const wxPoint& pos = SYMBOL_WXKEYBOARD_POSITION, const wxSize& size = SYMBOL_WXKEYBOARD_SIZE, long style = SYMBOL_WXKEYBOARD_STYLE );
-	virtual ~wxKeyboard();
+    Samplitron( );
+    Samplitron( wxWindow* parent, wxWindowID id = SYMBOL_WXKEYBOARD_IDNAME, const wxString& caption = SYMBOL_WXKEYBOARD_TITLE, const wxPoint& pos = SYMBOL_WXKEYBOARD_POSITION, const wxSize& size = SYMBOL_WXKEYBOARD_SIZE, long style = SYMBOL_WXKEYBOARD_STYLE );
+	virtual ~Samplitron();
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WXKEYBOARD_IDNAME, const wxString& caption = SYMBOL_WXKEYBOARD_TITLE, const wxPoint& pos = SYMBOL_WXKEYBOARD_POSITION, const wxSize& size = SYMBOL_WXKEYBOARD_SIZE, long style = SYMBOL_WXKEYBOARD_STYLE );
     void CreateControls();
@@ -199,4 +195,4 @@ private:
 };
 
 #endif
-    // _WXKEYBOARD_H_
+    // _SAMPLITRON_H_

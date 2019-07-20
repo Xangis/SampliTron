@@ -1,24 +1,24 @@
-#ifndef _WXKEYBOARDAPP_H_
-#define _WXKEYBOARDAPP_H_
+#ifndef _SAMPLITRONAPP_H_
+#define _SAMPLITRONAPP_H_
 
 /*!
  * Includes
  */
 #include "wx/image.h"
-#include "wxkeyboard.h"
+#include "Samplitron.h"
 
 /*!
- * wxKeyboardApp class declaration
+ * SamplitronApp class declaration
  */
 
-class wxKeyboardApp: public wxApp
+class SamplitronApp: public wxApp
 {
-    DECLARE_CLASS( wxKeyboardApp )
+    DECLARE_CLASS( SamplitronApp )
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructor
-    wxKeyboardApp();
+    SamplitronApp();
 
     /// Initialises the application
     virtual bool OnInit();
@@ -31,6 +31,6 @@ public:
  * Application instance declaration 
  */
 
-DECLARE_APP(wxKeyboardApp)
+DECLARE_APP(SamplitronApp)
 
 #endif

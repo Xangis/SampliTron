@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "wx/wx.h"
-#include "wxkeyboard.h"
+#include "Samplitron.h"
 
 // Icons and images
 #include "btn1sml.xpm"
@@ -29,50 +29,42 @@
 #include "openfolder.xpm"
 #include "octave.xpm"
 
-#ifdef __APPLE__
-IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxFrame )
-#else
-IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
-#endif
+IMPLEMENT_DYNAMIC_CLASS( Samplitron, wxFrame )
 
-#ifdef __APPLE__
-BEGIN_EVENT_TABLE( wxKeyboard, wxFrame )
-#else
-BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
-#endif
-    EVT_CLOSE( wxKeyboard::OnCloseWindow )
-    EVT_KEY_DOWN( wxKeyboard::OnKeyDown )
-    EVT_KEY_UP( wxKeyboard::OnKeyUp )
-	EVT_BUTTON( ID_PANICBUTTON, wxKeyboard::OnPanic )
-	EVT_BUTTON( ID_INFOBUTTON, wxKeyboard::OnInfo )
-	EVT_BUTTON( ID_HELPBUTTON, wxKeyboard::OnHelp )
-	EVT_BUTTON( ID_MIDIBUTTON, wxKeyboard::OnMidiSettings )
-	EVT_BUTTON( ID_SETTINGSBUTTON, wxKeyboard::OnSettings )
-	EVT_BUTTON( ID_SAVEBUTTON, wxKeyboard::OnSaveConfig )
-	EVT_BUTTON( ID_LOADBUTTON, wxKeyboard::OnLoadConfig )
-	EVT_BUTTON( ID_ADSRBUTTON, wxKeyboard::OnAdsr )
-	EVT_BUTTON( ID_FILTERBUTTON, wxKeyboard::OnFilter )
-    EVT_SPIN_UP( ID_BANKSPIN, wxKeyboard::OnBankSpinUp )
-    EVT_SPIN_DOWN( ID_BANKSPIN, wxKeyboard::OnBankSpinDown )
-    EVT_SPIN_UP( ID_PATCHSPIN, wxKeyboard::OnPatchSpinUp )
-    EVT_SPIN_DOWN( ID_PATCHSPIN, wxKeyboard::OnPatchSpinDown )
-	EVT_COMMAND_SCROLL( ID_MODWHEEL, wxKeyboard::OnModWheel )
-	EVT_COMMAND_SCROLL( ID_PITCHWHEEL, wxKeyboard::OnPitchWheel )
-    EVT_LEFT_UP(wxKeyboard::OnMouseRelease) // Catches note off outside of an octave control.
-    EVT_MENU( wxID_HELP, wxKeyboard::OnHelp )
-    EVT_MENU( wxID_ABOUT, wxKeyboard::OnInfo )
+BEGIN_EVENT_TABLE( Samplitron, wxFrame )
+    EVT_CLOSE( Samplitron::OnCloseWindow )
+    EVT_KEY_DOWN( Samplitron::OnKeyDown )
+    EVT_KEY_UP( Samplitron::OnKeyUp )
+	EVT_BUTTON( ID_PANICBUTTON, Samplitron::OnPanic )
+	EVT_BUTTON( ID_INFOBUTTON, Samplitron::OnInfo )
+	EVT_BUTTON( ID_HELPBUTTON, Samplitron::OnHelp )
+	EVT_BUTTON( ID_MIDIBUTTON, Samplitron::OnMidiSettings )
+	EVT_BUTTON( ID_SETTINGSBUTTON, Samplitron::OnSettings )
+	EVT_BUTTON( ID_SAVEBUTTON, Samplitron::OnSaveConfig )
+	EVT_BUTTON( ID_LOADBUTTON, Samplitron::OnLoadConfig )
+	EVT_BUTTON( ID_ADSRBUTTON, Samplitron::OnAdsr )
+	EVT_BUTTON( ID_FILTERBUTTON, Samplitron::OnFilter )
+    EVT_SPIN_UP( ID_BANKSPIN, Samplitron::OnBankSpinUp )
+    EVT_SPIN_DOWN( ID_BANKSPIN, Samplitron::OnBankSpinDown )
+    EVT_SPIN_UP( ID_PATCHSPIN, Samplitron::OnPatchSpinUp )
+    EVT_SPIN_DOWN( ID_PATCHSPIN, Samplitron::OnPatchSpinDown )
+	EVT_COMMAND_SCROLL( ID_MODWHEEL, Samplitron::OnModWheel )
+	EVT_COMMAND_SCROLL( ID_PITCHWHEEL, Samplitron::OnPitchWheel )
+    EVT_LEFT_UP(Samplitron::OnMouseRelease) // Catches note off outside of an octave control.
+    EVT_MENU( wxID_HELP, Samplitron::OnHelp )
+    EVT_MENU( wxID_ABOUT, Samplitron::OnInfo )
 END_EVENT_TABLE()
 
-wxKeyboard::wxKeyboard()
+Samplitron::Samplitron()
 {
 }
 
-wxKeyboard::wxKeyboard( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+Samplitron::Samplitron( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     Create(parent, id, caption, pos, size, style);
 }
 
-wxKeyboard::~wxKeyboard()
+Samplitron::~Samplitron()
 {
 	this->Pause();
 	Sleep(10);
@@ -96,7 +88,7 @@ wxKeyboard::~wxKeyboard()
 /**
 * Handles dialog creation, initializes audio.
 */
-bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool Samplitron::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	_filterEnabled = false;
 	_midiOutputEnabled = true;
@@ -158,11 +150,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	_midiOutputDeviceNumber = 0;  // Default Output
 	EnableMidiOutput(false);
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-#ifdef __APPLE__
     wxFrame::Create( parent, id, caption, pos, size, style );
-#else
-    wxDialog::Create( parent, id, caption, pos, size, style );
-#endif
 
     CreateControls();
     Centre();
@@ -339,9 +327,9 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 }
 
 
-void wxKeyboard::CreateControls()
+void Samplitron::CreateControls()
 {
-    wxKeyboard* itemDialog1 = this;
+    Samplitron* itemDialog1 = this;
 
 #ifdef __APPLE__
     wxMenu* helpMenu = new wxMenu();
@@ -368,42 +356,42 @@ void wxKeyboard::CreateControls()
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Bank"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText4->SetForegroundColour(_textColour);
-	itemStaticText4->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	itemStaticText4->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _bankText = new wxStaticText( itemDialog1, ID_BANKTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _bankText->SetForegroundColour(_textColour);
-	_bankText->Connect(ID_BANKTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_bankText->Connect(ID_BANKTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	itemBoxSizer3->Add(_bankText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	_bankSpin = new wxBitmapSpinButton( itemDialog1, ID_BANKSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _bankSpin->SetXpmBitmap(spin_xpm);
-	_bankSpin->Connect(ID_BANKSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_bankSpin->Connect(ID_BANKSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	_bankSpin->SetToolTip( _("Change patch bank" ));
 	itemBoxSizer3->Add(_bankSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("Patch"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText8->SetForegroundColour(_textColour);
-	itemStaticText8->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	itemStaticText8->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _patchText = new wxStaticText( itemDialog1, ID_PATCHTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _patchText->SetForegroundColour(_textColour);
-	_patchText->Connect(ID_PATCHTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_patchText->Connect(ID_PATCHTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(_patchText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	_patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _patchSpin->SetXpmBitmap(spin_xpm);
-	_patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	_patchSpin->SetToolTip( _("Change patch number") );
 	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
 	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
 #ifndef __APPLE__
@@ -411,34 +399,34 @@ void wxKeyboard::CreateControls()
 	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
 	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _infoButton->SetToolTip(_("About SampliTron"));
 
 	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
 	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
 #endif
 
 	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change MIDI settings"));
 
 	wxBitmap settingsBitmap( wrench_xpm, wxBITMAP_TYPE_XPM );
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change program settings"));
 
 	// The ADSR envelope does not work properly.  The problem is that for some reason, the envelope is only applied to the
@@ -446,27 +434,27 @@ void wxKeyboard::CreateControls()
 	//wxBitmap adsrBitmap( "adsr.xpm", wxBITMAP_TYPE_XPM );
 	//_adsrButton = new wxBitmapButton( itemDialog1, ID_ADSRBUTTON, adsrBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	//itemBoxSizer3->Add(_adsrButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	//_midiButton->Connect(ID_ADSRBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	//_midiButton->SetToolTip("Edit ADSR envelope settings");
 
 #ifdef WIN32
 	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
 	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _filterButton->SetToolTip("Edit filter settings");
 #endif
 
 	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
 	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 #ifdef DEMOVERSION
     _saveButton->SetToolTip(_("Save Sampler Configuration to Disk (Disabled in Demo)"));
 #else
@@ -476,18 +464,18 @@ void wxKeyboard::CreateControls()
 	wxBitmap loadBitmap( openfolder_xpm, wxBITMAP_TYPE_XPM );
 	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
-	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_loadButton->Connect(ID_LOADBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
+	_loadButton->Connect(ID_LOADBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _loadButton->SetToolTip(_("Load Sampler Configuration from Disk"));
 
 	wxBoxSizer* itemBoxSizer3b = new wxBoxSizer(wxVERTICAL);
 	_volumeMeterL = new wxVolumeMeter( itemDialog1, ID_VOLUME_LEFT, 100, wxDefaultPosition, wxSize(100, 10));
-	_volumeMeterL->Connect(ID_VOLUME_LEFT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_volumeMeterL->Connect(ID_VOLUME_LEFT, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	itemBoxSizer3b->Add(_volumeMeterL, 0, wxALL, 1);
 
 	_volumeMeterR = new wxVolumeMeter( itemDialog1, ID_VOLUME_RIGHT, 100, wxDefaultPosition, wxSize(100, 10));
-	_volumeMeterR->Connect(ID_VOLUME_RIGHT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	_volumeMeterR->Connect(ID_VOLUME_RIGHT, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	itemBoxSizer3b->Add(_volumeMeterR, 0, wxALL, 1);
 	itemBoxSizer3->Add(itemBoxSizer3b, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
@@ -496,21 +484,21 @@ void wxKeyboard::CreateControls()
 
 	_pitchWheel = new wxBitmapSlider( itemDialog1, ID_PITCHWHEEL, 8192, 0, 16383, wxDefaultPosition, wxSize( 30, 108 ), wxSL_VERTICAL|wxSL_INVERSE ); // 30x108 pixels
 	// We don't want to do this because the mod wheel is used to tweak currently-playing notes.
-	//_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	//_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
     _pitchWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
     itemBoxSizer12->Add( _pitchWheel, 0, wxALL, 5 );
-	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_pitchWheel->Connect(ID_PITCHWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
 	_modWheel = new wxBitmapSlider( itemDialog1, ID_MODWHEEL, 0, 0, 16383, wxDefaultPosition, wxSize( 30, 108 ), wxSL_VERTICAL|wxSL_INVERSE );
 	// We don't want to do this because the mod wheel is used to tweak currently-playing notes.
-	//_modWheel->Connect(ID_MODWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+	//_modWheel->Connect(ID_MODWHEEL, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
 	// Bitmaps don't render right.
 	_modWheel->SetXpmBitmaps(sliderbk_xpm, sliderind_xpm);
 	itemBoxSizer12->Add( _modWheel, 0, wxALL, 5 );
-	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
 	wxBitmap _octaveBitmap(octave_xpm, wxBITMAP_TYPE_XPM);
 	if( !_octaveBitmap.IsOk() )
@@ -522,52 +510,52 @@ void wxKeyboard::CreateControls()
     _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 24, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[0], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[0]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
     _octave[1] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD2, _octaveBitmap, 36, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[1], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[1]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
     _octave[2] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD3, _octaveBitmap, 48, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[2], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[2]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
     _octave[3] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD4, _octaveBitmap, 60, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[3], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[3]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
     _octave[4] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD5, _octaveBitmap, 72, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[4], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[4]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
     _octave[5] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD4, _octaveBitmap, 84, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[5], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[5]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[5]->Connect(ID_KEYBOARD6, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[5]->Connect(ID_KEYBOARD6, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[5]->Connect(ID_KEYBOARD6, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[5]->Connect(ID_KEYBOARD6, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 	_octave[5]->Show(false);
 
     _octave[6] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD5, _octaveBitmap, 96, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[6], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[6]->SetBitmaps(keyind1sml, keyind1lrg);
-	_octave[6]->Connect(ID_KEYBOARD7, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_octave[6]->Connect(ID_KEYBOARD7, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_octave[6]->Connect(ID_KEYBOARD7, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
+	_octave[6]->Connect(ID_KEYBOARD7, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 	_octave[6]->Show(false);
 
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 }
 
-bool wxKeyboard::ShowToolTips()
+bool Samplitron::ShowToolTips()
 {
     return true;
 }
@@ -575,12 +563,12 @@ bool wxKeyboard::ShowToolTips()
 /**
 * Enables or disables MIDI output.
 */
-void wxKeyboard::EnableMidiOutput(bool enabled)
+void Samplitron::EnableMidiOutput(bool enabled)
 {
 	_midiOutputEnabled = enabled;
 }
 
-wxIcon wxKeyboard::GetIconResource( const wxString& name )
+wxIcon Samplitron::GetIconResource( const wxString& name )
 {
     wxUnusedVar(name);
     return wxNullIcon;
@@ -589,7 +577,7 @@ wxIcon wxKeyboard::GetIconResource( const wxString& name )
 /**
 * Displays the MIDI settings dialog, changing settings based on responses.
 */
-void wxKeyboard::OnMidiSettings( wxCommandEvent& )
+void Samplitron::OnMidiSettings( wxCommandEvent& )
 {
 	wxMidiSettingsDlg* dlg = new wxMidiSettingsDlg(this, this);
     dlg->SetForegroundColour(wxColour( 150, 150, 250 ));
@@ -611,7 +599,7 @@ void wxKeyboard::OnMidiSettings( wxCommandEvent& )
 /**
 * Changes the MIDI input channel.
 */
-void wxKeyboard::SelectMidiInputChannel( int number )
+void Samplitron::SelectMidiInputChannel( int number )
 {
     // Set MIDI Channel
 	if( number > 16 )
@@ -625,7 +613,7 @@ void wxKeyboard::SelectMidiInputChannel( int number )
 /**
 * Changes the MIDI output channel, turning off all notes on the previous channel.
 */
-void wxKeyboard::SelectMidiOutputChannel( int number )
+void Samplitron::SelectMidiOutputChannel( int number )
 {
     // Set MIDI Channel
 	if( number > 16 )
@@ -639,7 +627,7 @@ void wxKeyboard::SelectMidiOutputChannel( int number )
 /**
 * Handles bank up spinner events.
 */
-void wxKeyboard::OnBankSpinUp( wxSpinEvent& event )
+void Samplitron::OnBankSpinUp( wxSpinEvent& event )
 {
     // Set Bank
     int value = atoi(_bankText->GetLabel().mb_str());
@@ -656,7 +644,7 @@ void wxKeyboard::OnBankSpinUp( wxSpinEvent& event )
 /**
 * Handles bank down spinner events.
 */
-void wxKeyboard::OnBankSpinDown( wxSpinEvent& event )
+void Samplitron::OnBankSpinDown( wxSpinEvent& event )
 {
     // Set Bank
     int value = atoi(_bankText->GetLabel().mb_str());
@@ -673,7 +661,7 @@ void wxKeyboard::OnBankSpinDown( wxSpinEvent& event )
 /**
 * Changes patch banks, sending MIDI bank change messages.
 */
-void wxKeyboard::SetBank( int bank, bool receivedFromMidi )
+void Samplitron::SetBank( int bank, bool receivedFromMidi )
 {
     // Send MIDI message
 	// Bank change 0x00 0xB0 0x00 0x[bank]  - fine
@@ -702,7 +690,7 @@ void wxKeyboard::SetBank( int bank, bool receivedFromMidi )
 /**
 * Handles patch spinner up events.
 */
-void wxKeyboard::OnPatchSpinUp( wxSpinEvent& event )
+void Samplitron::OnPatchSpinUp( wxSpinEvent& event )
 {
     // Set Patch
     int value = atoi(_patchText->GetLabel().mb_str());
@@ -720,7 +708,7 @@ void wxKeyboard::OnPatchSpinUp( wxSpinEvent& event )
 /**
 * Handles settings button clicks.
 */
-void wxKeyboard::OnSettings( wxCommandEvent& event )
+void Samplitron::OnSettings( wxCommandEvent& event )
 {
 	SettingsDlg dlg(this);
 	dlg.SetNumOctaves(_numOctaves);
@@ -741,7 +729,7 @@ void wxKeyboard::OnSettings( wxCommandEvent& event )
 /**
 * Handles patch spinner down events.
 */
-void wxKeyboard::OnPatchSpinDown( wxSpinEvent& event )
+void Samplitron::OnPatchSpinDown( wxSpinEvent& event )
 {
     // Set Patch
     int value = atoi(_patchText->GetLabel().mb_str());
@@ -757,7 +745,7 @@ void wxKeyboard::OnPatchSpinDown( wxSpinEvent& event )
 /**
 * Handles patch changes, sends MIDI patch change message.
 */
-void wxKeyboard::SetPatch( int value, bool receivedFromMidi )
+void Samplitron::SetPatch( int value, bool receivedFromMidi )
 {
     // Send MIDI message
 	// Patch change: 0xC[channel] + byte for patch change.
@@ -778,7 +766,7 @@ void wxKeyboard::SetPatch( int value, bool receivedFromMidi )
 /**
 * Handles window close events.
 */
-void wxKeyboard::OnCloseWindow( wxCloseEvent& event )
+void Samplitron::OnCloseWindow( wxCloseEvent& event )
 {
     this->Destroy();
 	Sleep(12);
@@ -788,7 +776,7 @@ void wxKeyboard::OnCloseWindow( wxCloseEvent& event )
 /**
 * Handles key down events.
 */
-void wxKeyboard::OnKeyDown( wxKeyEvent& event )
+void Samplitron::OnKeyDown( wxKeyEvent& event )
 {
     int key = event.GetKeyCode();
 	if( key == WXK_ALT )
@@ -814,7 +802,7 @@ void wxKeyboard::OnKeyDown( wxKeyEvent& event )
 /**
 * Handles key up events, turns off a playing note.
 */
-void wxKeyboard::OnKeyUp( wxKeyEvent& event )
+void Samplitron::OnKeyUp( wxKeyEvent& event )
 {
 	int key = event.GetKeyCode();
 	if( key == WXK_ALT )
@@ -832,7 +820,7 @@ void wxKeyboard::OnKeyUp( wxKeyEvent& event )
     event.Skip(false);
 }
 
-//void wxKeyboard::ShowMappedSamples(bool show)
+//void Samplitron::ShowMappedSamples(bool show)
 //{
 //	if( show )
 //	{
@@ -858,7 +846,7 @@ void wxKeyboard::OnKeyUp( wxKeyEvent& event )
 /**
 * Gets the MIDI note number from a keyboard code.
 */
-int wxKeyboard::GetNoteValue( int value )
+int Samplitron::GetNoteValue( int value )
 {
 	int note = 0;
     switch( value )
@@ -1053,7 +1041,7 @@ int wxKeyboard::GetNoteValue( int value )
 /**
 * Gets the number of notes currently playing.  Used for restricting polyphony in demo version.
 */
-int wxKeyboard::GetNumNotesPlaying()
+int Samplitron::GetNumNotesPlaying()
 {
 	int notes = 0;
 	for( int i = 0; i < MAX_NOTES; i++ )
@@ -1066,7 +1054,7 @@ int wxKeyboard::GetNumNotesPlaying()
 /**
 * Turns on a note and sends MIDI note on data.
 */
-void wxKeyboard::PlayNote( int note, bool receivedFromMidi )
+void Samplitron::PlayNote( int note, bool receivedFromMidi )
 {
 #ifdef DEMOVERSION
 	if( _playing[note] == false && GetNumNotesPlaying() < 2)
@@ -1125,7 +1113,7 @@ void wxKeyboard::PlayNote( int note, bool receivedFromMidi )
 /**
 * Takes the note number and figures out which octave object it refers to.
 */
-int wxKeyboard::GetOctaveByNote( int note )
+int Samplitron::GetOctaveByNote( int note )
 {
 	// Minimum octave and below is translated to minimum octave.
 	if( note < 36 )
@@ -1146,7 +1134,7 @@ int wxKeyboard::GetOctaveByNote( int note )
 /**
 * Turns off a note, sends MIDI note off data.
 */
-void wxKeyboard::StopNote( int note, bool receivedFromMidi )
+void Samplitron::StopNote( int note, bool receivedFromMidi )
 {
 	int octavenum = GetOctaveByNote(note);
 	if( octavenum >= 0 && octavenum < MAX_OCTAVES )
@@ -1180,7 +1168,7 @@ void wxKeyboard::StopNote( int note, bool receivedFromMidi )
 /**
 * Processes mouse right clicks, displays sample editing dialog.
 */
-void wxKeyboard::OnRightClick( int note )
+void Samplitron::OnRightClick( int note )
 {
     // Show sample edit dialog with settings for note.
     SampleDataDlg sampleDialog(this);
@@ -1209,7 +1197,7 @@ void wxKeyboard::OnRightClick( int note )
 //
 // This should resample all necessary samples when "conserve CPU" is set, and should not when "Conserve Memory"
 // is set.
-void wxKeyboard::RefreshSampleData()
+void Samplitron::RefreshSampleData()
 {
 	for( int i = 0; i < MAX_OCTAVES; i++ )
 	{
@@ -1298,7 +1286,7 @@ void wxKeyboard::RefreshSampleData()
 * Copies sample data from the source to a range of samples.  Used when extrapolating one or more
 * user-specified sample across non-specified keys.
 */
-void wxKeyboard::CopySampleData(int start, int end, int source)
+void Samplitron::CopySampleData(int start, int end, int source)
 {
 	if( end < start )
 		return;
@@ -1333,7 +1321,7 @@ void wxKeyboard::CopySampleData(int start, int end, int source)
 * Clears the sample data when a sample has had its filename cleared or when we
 * are replacing it with another sample.
 */
-void wxKeyboard::ClearSampleData(int samplNum)
+void Samplitron::ClearSampleData(int samplNum)
 {
 	if( _sample[samplNum]->_waveFile != NULL )
 	{
@@ -1349,7 +1337,7 @@ void wxKeyboard::ClearSampleData(int samplNum)
 * Deletes existing data and resamples as necessary based on the existing sample
 * data.
 */
-bool wxKeyboard::LoadSample(int sampleNum)
+bool Samplitron::LoadSample(int sampleNum)
 {
 #ifdef WIN32
 	if( _sample[sampleNum]->_waveFile != NULL || _sample[sampleNum]->_sourceVoice != NULL )
@@ -1407,7 +1395,7 @@ bool wxKeyboard::LoadSample(int sampleNum)
 //void CALLBACK MidiMessageHandler(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
 void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message, void *userData )
 {
-	wxKeyboard* key = (wxKeyboard*)userData;
+	Samplitron* key = (Samplitron*)userData;
 
 	if( key == NULL )
 	{
@@ -1446,8 +1434,8 @@ void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message
 /**
 * Handles incoming MIDI message data.
 */
-//void wxKeyboard::ProcessMidiMessage(DWORD dwParam1, DWORD dwParam2)
-void wxKeyboard::ProcessMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4)
+//void Samplitron::ProcessMidiMessage(DWORD dwParam1, DWORD dwParam2)
+void Samplitron::ProcessMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4)
 
 {
 	// MIDI timimg clock pulse.  Doesn't mean anything to us.
@@ -1522,7 +1510,7 @@ void wxKeyboard::ProcessMidiMessage(unsigned char byte1, unsigned char byte2, un
 /**
 * Processes MIDI input device selection changes.
 */
-void wxKeyboard::SelectMidiInputDevice(int number)
+void Samplitron::SelectMidiInputDevice(int number)
 {
 	_midiInputDeviceNumber = number;
 #ifdef WIN32
@@ -1549,7 +1537,7 @@ void wxKeyboard::SelectMidiInputDevice(int number)
 /**
 * Processes MIDI output device selection changes.
 */
-void wxKeyboard::SelectMidiOutputDevice(int number)
+void Samplitron::SelectMidiOutputDevice(int number)
 {
 	_midiOutputDeviceNumber = number;
 #ifdef WIN32
@@ -1574,7 +1562,7 @@ void wxKeyboard::SelectMidiOutputDevice(int number)
 /**
 * Handles pitch wheel messages, sends MIDI controller data.
 */
-void wxKeyboard::OnPitchWheel( wxScrollEvent& event )
+void Samplitron::OnPitchWheel( wxScrollEvent& event )
 {
 	int value;
 	if( event.GetEventType() == wxEVT_SCROLL_THUMBRELEASE )
@@ -1607,7 +1595,7 @@ void wxKeyboard::OnPitchWheel( wxScrollEvent& event )
 /**
 * Handles mod wheel messages, sends MIDI controller data.
 */
-void wxKeyboard::OnModWheel( wxScrollEvent& event )
+void Samplitron::OnModWheel( wxScrollEvent& event )
 {
 	int value = _modWheel->GetValue();
 	int coarse = value / 128;
@@ -1636,7 +1624,7 @@ void wxKeyboard::OnModWheel( wxScrollEvent& event )
 /**
 * Handles panic button, turns everything off.
 */
-void wxKeyboard::OnPanic( wxCommandEvent& event )
+void Samplitron::OnPanic( wxCommandEvent& event )
 {
 	AllNotesOff();
 	AllControllersOff();
@@ -1648,7 +1636,7 @@ void wxKeyboard::OnPanic( wxCommandEvent& event )
 /**
 * Sends MIDI all sounds off message.
 */
-void wxKeyboard::AllSoundOff( void )
+void Samplitron::AllSoundOff( void )
 {
 	if( _midiOutputEnabled )
 	{
@@ -1666,7 +1654,7 @@ void wxKeyboard::AllSoundOff( void )
 /**
 * Handles release of the left mouse button.
 */
-void wxKeyboard::OnMouseRelease( wxMouseEvent& event )
+void Samplitron::OnMouseRelease( wxMouseEvent& event )
 {
 	AllNotesOff();
 	event.Skip();
@@ -1675,7 +1663,7 @@ void wxKeyboard::OnMouseRelease( wxMouseEvent& event )
 /**
 * Turns off all notes and indicators.
 */
-void wxKeyboard::AllNotesOff( bool receivedFromMidi )
+void Samplitron::AllNotesOff( bool receivedFromMidi )
 {
 	for( int i = 0; i < MAX_NOTES; i++ )
 	{
@@ -1707,7 +1695,7 @@ void wxKeyboard::AllNotesOff( bool receivedFromMidi )
 /**
 * Turns off all MIDI controllers.
 */
-void wxKeyboard::AllControllersOff( void )
+void Samplitron::AllControllersOff( void )
 {
 	if( _midiOutputEnabled )
 	{
@@ -1729,7 +1717,7 @@ void wxKeyboard::AllControllersOff( void )
 /**
 * Loads a sampler config from disk and sets up the key map.
 */
-void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
+void Samplitron::OnLoadConfig( wxCommandEvent& event )
 {
         // This will probably only work right on Windows 7 or newer because XP has a different path structure.
         wxString path = _(".\\Patches");
@@ -1820,7 +1808,7 @@ void wxKeyboard::OnLoadConfig( wxCommandEvent& event )
 /**
 * Saves a sampler config to disk.
 */
-void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
+void Samplitron::OnSaveConfig( wxCommandEvent& event )
 {
 #ifdef DEMOVERSION
 #else
@@ -1886,7 +1874,7 @@ void wxKeyboard::OnSaveConfig( wxCommandEvent& event )
 /**
 * Shows help file.
 */
-void wxKeyboard::OnHelp( wxCommandEvent& event )
+void Samplitron::OnHelp( wxCommandEvent& event )
 {
 	// Show help file.
 	_helpCtrl->DisplayContents();
@@ -1897,7 +1885,7 @@ void wxKeyboard::OnHelp( wxCommandEvent& event )
 /**
 * Shows the dialog for editing ADSR envelope.
 */
-void wxKeyboard::OnAdsr( wxCommandEvent& event )
+void Samplitron::OnAdsr( wxCommandEvent& event )
 {
 	wxADSRDlg* dlg = new wxADSRDlg(this);
 	dlg->SetForegroundColour(wxColour( 150, 150, 250 ));
@@ -1914,7 +1902,7 @@ void wxKeyboard::OnAdsr( wxCommandEvent& event )
 /**
 * Shows the dialog for editing filter settings.
 */
-void wxKeyboard::OnFilter( wxCommandEvent& event )
+void Samplitron::OnFilter( wxCommandEvent& event )
 {
 	wxFilterSettingsDlg* dlg = new wxFilterSettingsDlg(this);
     dlg->SetForegroundColour(wxColour( 150, 150, 250 ));
@@ -1961,7 +1949,7 @@ void wxKeyboard::OnFilter( wxCommandEvent& event )
 /**
 * Shows about box.
 */
-void wxKeyboard::OnInfo( wxCommandEvent& event )
+void Samplitron::OnInfo( wxCommandEvent& event )
 {
 	// Show about box.
     wxAboutDialogInfo info;
@@ -1987,7 +1975,7 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 /**
 * App background thread -- monitors buffers, etc.
 */
-void * wxKeyboard::Entry()
+void * Samplitron::Entry()
 {
 #ifdef WIN32
 	XAUDIO2FX_VOLUMEMETER_LEVELS levels;
@@ -2041,7 +2029,7 @@ void * wxKeyboard::Entry()
 	return NULL;
 }
 
-float wxKeyboard::GetEnvelopeVolume(int note, int playbackSamplePosition)
+float Samplitron::GetEnvelopeVolume(int note, int playbackSamplePosition)
 {
 	if( playbackSamplePosition == 0 )
 		return 0.0f;
@@ -2071,7 +2059,7 @@ float wxKeyboard::GetEnvelopeVolume(int note, int playbackSamplePosition)
 	return 1.0f;
 }
 
-void wxKeyboard::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4, bool shortmsg)
+void Samplitron::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4, bool shortmsg)
 {
     std::vector<unsigned char> msg;
     msg.push_back(byte4);
