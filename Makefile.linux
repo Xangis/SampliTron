@@ -8,6 +8,7 @@ PROGRAM = SampliTron
 
 # Directory containing library portions of code.
 INCLUDEDIR = ../../AudioFile
+INCLUDEDIR2 = /usr/include/rtmidi/
 
 # Object files
 OBJECTS = SettingsDlg.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxSettingsFile.o ../wxAudioControls/wxBitmapSlider.o ../wxAudioControls/wxMidiSettingsDlg.o ../wxAudioControls/wxVolumeMeter.o ../wxAudioControls/wxSwitch.o ../wxAudioControls/wxOctaveCtrl.o ../wxAudioControls/wxBitmapSpinButton.o ../wxAudioControls/wxKeylessBitmapButton.o Samplitron.o SamplitronApp.o sampledatadlg.o ../wxAudioControls/wxADSRDlg.o sampledata.o ../AudioFile/wavefile.o ../wxAudioControls/wxFilterSettingsDlg.o
@@ -18,12 +19,12 @@ CXX = $(shell $(WX_CONFIG) --cxx -ggdb)
 
 .cpp.o :
 #	$(CXX) -c -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR) `$(WX_CONFIG) --cxxflags` -o $@ $<
-	$(CXX) -c -g -ggdb -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR) `$(WX_CONFIG) --cxxflags` -o $@ $<
+	$(CXX) -c -g -ggdb -D__LINUX_ALSASEQ__ -I$(INCLUDEDIR) -I$(INCLUDEDIR2) `$(WX_CONFIG) --cxxflags` -o $@ $<
 
 all:    $(PROGRAM)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lportaudio -lasound -lpthread -lsndfile -lrtmidi
+	$(CXX) -o $(PROGRAM) $(OBJECTS) `$(WX_CONFIG) --libs` -lrtaudio -lasound -lpthread -lsndfile -lrtmidi
 
-clean: 
+clean:
 	rm -f *.o $(PROGRAM)
