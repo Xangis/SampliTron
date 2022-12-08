@@ -95,6 +95,7 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="todo.txt" />
+    <None Include="Changes.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="wxKeyboard.rc">

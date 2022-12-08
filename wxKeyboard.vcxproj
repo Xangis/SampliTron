@@ -28,18 +28,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -95,10 +99,10 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Xangis\code\AudioFile;C:\Users\Xangis\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\rtmidi-2.1.0;F:\lib\libsndfile-1.0.25\include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Debug;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Xangis\code\AudioFile;C:\Users\Xangis\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\rtmidi-2.1.0;F:\lib\libsndfile-1.0.25\include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Release;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\code\AudioFile;E:\code\XWaveFile;E:\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;E:\lib\rtmidi-2.1.0;E:\lib\libsndfile-1.0.28\include;E:\lib\wxWidgets-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\code\AudioFile;E:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;E:\lib\libsndfile-1.0.28\lib;E:\code\wxAudioControls\Debug;E:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\code\AudioFile;E:\code\XWaveFile;E:\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;E:\lib\rtmidi-2.1.0;E:\lib\libsndfile-1.0.28\include;E:\lib\wxWidgets-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\code\AudioFile;E:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;E:\lib\libsndfile-1.0.28\lib;E:\code\wxAudioControls\Release;E:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">C:\Users\Xangis\code\AudioFile;C:\Users\Xangis\code\wxAudioControls;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\rtmidi-2.1.0;F:\lib\libsndfile-1.0.25\include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">C:\Users\Xangis\code\AudioFile;F:\lib\rtmidi-2.1.0\lib;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;F:\lib\libsndfile-1.0.25\lib;C:\Users\Xangis\code\wxAudioControls\Demo;F:\lib\wxWidgets-3.0.2\lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

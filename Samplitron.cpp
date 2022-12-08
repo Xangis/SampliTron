@@ -386,7 +386,7 @@ void Samplitron::CreateControls()
 	_patchSpin->SetToolTip( _("Change patch number") );
 	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap panicBitmap(exclamation_xpm);
 	_panicButton = new wxKeylessBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -396,7 +396,7 @@ void Samplitron::CreateControls()
 
 #ifndef __APPLE__
     // For Apple, only include info and help on the menu.
-	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap infoBitmap(info_xpm);
 	_infoButton = new wxKeylessBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -404,7 +404,7 @@ void Samplitron::CreateControls()
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _infoButton->SetToolTip(_("About SampliTron"));
 
-	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap helpBitmap(help_xpm);
 	_helpButton = new wxKeylessBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -413,7 +413,7 @@ void Samplitron::CreateControls()
     _helpButton->SetToolTip(_("Help"));
 #endif
 
-	wxBitmap midiBitmap( midiport_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap midiBitmap(midiport_xpm);
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_MIDIBUTTON, midiBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -421,7 +421,7 @@ void Samplitron::CreateControls()
 	_midiButton->Connect(ID_MIDIBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(Samplitron::OnMouseRelease), NULL, this);
     _midiButton->SetToolTip(_("Change MIDI settings"));
 
-	wxBitmap settingsBitmap( wrench_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap settingsBitmap(wrench_xpm);
 	_midiButton = new wxKeylessBitmapButton( itemDialog1, ID_SETTINGSBUTTON, settingsBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_midiButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_midiButton->Connect(ID_SETTINGSBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -440,7 +440,7 @@ void Samplitron::CreateControls()
 	//_midiButton->SetToolTip("Edit ADSR envelope settings");
 
 #ifdef WIN32
-	wxBitmap filterBitmap( filter_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap filterBitmap(filter_xpm);
 	_filterButton = new wxKeylessBitmapButton( itemDialog1, ID_FILTERBUTTON, filterBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_filterButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_filterButton->Connect(ID_FILTERBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -449,7 +449,7 @@ void Samplitron::CreateControls()
     _filterButton->SetToolTip("Edit filter settings");
 #endif
 
-	wxBitmap saveBitmap( disk_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap saveBitmap(disk_xpm);
 	_saveButton = new wxKeylessBitmapButton( itemDialog1, ID_SAVEBUTTON, saveBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_saveButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_saveButton->Connect(ID_SAVEBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -461,7 +461,7 @@ void Samplitron::CreateControls()
     _saveButton->SetToolTip(_("Save Sampler Configuration to Disk"));
 #endif
 
-	wxBitmap loadBitmap( openfolder_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap loadBitmap(openfolder_xpm);
 	_loadButton = new wxKeylessBitmapButton( itemDialog1, ID_LOADBUTTON, loadBitmap, wxDefaultPosition, wxSize( buttonHeight, buttonHeight ) );
 	itemBoxSizer3->Add(_loadButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, buttonMargin );
 	_loadButton->Connect(ID_LOADBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
@@ -500,13 +500,13 @@ void Samplitron::CreateControls()
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_DOWN, wxKeyEventHandler(Samplitron::OnKeyDown), NULL, this);
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(Samplitron::OnKeyUp), NULL, this);
 
-	wxBitmap _octaveBitmap(octave_xpm, wxBITMAP_TYPE_XPM);
+	wxBitmap _octaveBitmap(octave_xpm);
 	if( !_octaveBitmap.IsOk() )
 	{
 		wxMessageBox(_("Could not load octave.bmp. Files broken."), _("Missing File"));
 	}
-	wxBitmap* keyind1sml = new wxBitmap(btn1sml_xpm, wxBITMAP_TYPE_XPM );
-	wxBitmap* keyind1lrg = new wxBitmap(btn1lrg_xpm, wxBITMAP_TYPE_XPM );
+	wxBitmap* keyind1sml = new wxBitmap(btn1sml_xpm);
+	wxBitmap* keyind1lrg = new wxBitmap(btn1lrg_xpm);
     _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 24, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[0], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[0]->SetBitmaps(keyind1sml, keyind1lrg);
@@ -1346,7 +1346,7 @@ bool Samplitron::LoadSample(int sampleNum)
 	}
 #endif
 
-	_sample[sampleNum]->_waveFile = WaveFile::Load( _sample[sampleNum]->_filename.mb_str(), true );
+	_sample[sampleNum]->_waveFile = XWaveFile::Load( _sample[sampleNum]->_filename.mb_str(), true );
 	if( !_sample[sampleNum]->_waveFile)
 	{
 		return false;
